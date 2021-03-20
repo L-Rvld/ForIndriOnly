@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/editindex"
+        app:showAsAction="ifRoom|withText"
+        android:icon="@drawable/ic_edit"
+        android:iconTint="@color/white"
+        android:title="Edit Index">
+    </item>
+    <item android:id="@+id/saveindex"
+        app:showAsAction="ifRoom|withText"
+        android:icon="@drawable/ic_save"
+        android:iconTint="@color/white"
+        android:title="Simpan">
+    </item>
+    <item android:id="@+id/closecancel"
+        app:showAsAction="ifRoom|withText"
+        android:icon="@drawable/ic_cancel"
+        android:iconTint="@color/white"
+        android:title="Batal">
+    </item>
+</menu>

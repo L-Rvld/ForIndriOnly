@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.polije.gizielectree">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".Admin.ListuseronlyActivity"></activity>
+        <activity android:name=".Admin.IndexActivity" android:theme="@style/Mater" />
+        <activity android:name=".Admin.DatamasterActivity" android:theme="@style/Mater" />
+        <activity android:name=".Admin.AdminMainActivity" />
+        <activity android:name=".DetailActivity" />
+        <activity android:name=".AkunActivity" />
+        <activity android:name=".DataActivity" />
+        <activity android:name=".RekomendasiActivity" />
+        <activity android:name=".FirstSetup" />
+        <activity android:name=".TentangActivity" />
+        <activity
+            android:name=".Splashscreen"
+            android:theme="@style/AppNo">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".RegisterUser"
+            android:theme="@style/AppNo" />
+        <activity
+            android:name=".Register"
+            android:theme="@style/AppNo" />
+        <activity
+            android:name=".Login"
+            android:theme="@style/AppNo" />
+        <activity android:name=".BMI" />
+        <activity android:name=".MainActivity" />
+    </application>
+
+</manifest>
