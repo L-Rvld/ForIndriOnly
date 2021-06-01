@@ -48,28 +48,28 @@ public class IndexActivity extends AppCompatActivity {
         req = bundle.getString("req");
         if (req.equals("bmi")){
             getSupportActionBar().setTitle("Index BMI");
-            openBMIMenu();
+//            openBMIMenu();
         }else
             if (req.equals("rec")){
-                getSupportActionBar().setTitle("Index Rekomendasi");
+                getSupportActionBar().setTitle("Index Pekerjaan");
                 openRecMenu();
         }
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
-    public void openBMIMenu(){
-        lBMI.setVisibility(View.VISIBLE);
-        lRec.setVisibility(View.GONE);
-
-        jkl = findViewById(R.id.eBMIJKL);
-        jkp = findViewById(R.id.eBMIJKP);
-        ai = findViewById(R.id.eBMII);
-        as = findViewById(R.id.eBMIS);
-        ar = findViewById(R.id.eBMIR);
-        ab = findViewById(R.id.eBMIB);
-        asb  = findViewById(R.id.eBMISB);
-
-    }
+//    public void openBMIMenu(){
+//        lBMI.setVisibility(View.VISIBLE);
+//        lRec.setVisibility(View.GONE);
+//
+//        jkl = findViewById(R.id.eBMIJKL);
+//        jkp = findViewById(R.id.eBMIJKP);
+//        ai = findViewById(R.id.eBMII);
+//        as = findViewById(R.id.eBMIS);
+//        ar = findViewById(R.id.eBMIR);
+//        ab = findViewById(R.id.eBMIB);
+//        asb  = findViewById(R.id.eBMISB);
+//
+//    }
 
     public void openRecMenu(){
         lRec.setVisibility(View.VISIBLE);

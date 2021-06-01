@@ -10,7 +10,7 @@
     <string name="registerUser">register.php</string>
     <string name="rekomendasi">rekomendasi.php</string>
     <string name="getDetail">getDetail.php</string>
-    <string name="newPass">setNewPass.php</string>
+    <string name="newPass">admin_change.php</string>
     <string name="admin_master">admin_master.php</string>
     <string-array name="kategori">
         <item>SEREALIA (Tunggal)</item>
@@ -67,5 +67,40 @@
         <item>NP</item>
         <item>QR</item>
         <item>OP</item>
+    </string-array>
+
+    <string-array name="pekerjaan">
+        <item> </item>
+        <item> </item>
+        <item> </item>
+        <item> </item>
+        <item> </item>
+        <item> </item>
+        <item> </item>
+        <item> </item>
+        <item> </item>
+        <item> </item>
+        <item> </item>
+        <item> </item>
+        <item> </item>
+        <item> </item>
+        <item> </item>
+    </string-array>
+    <string-array name="valuepekerjaan">
+        <item> </item>
+        <item> </item>
+        <item> </item>
+        <item> </item>
+        <item> </item>
+        <item> </item>
+        <item> </item>
+        <item> </item>
+        <item> </item>
+        <item> </item>
+        <item> </item>
+        <item> </item>
+        <item> </item>
+        <item> </item>
+        <item> </item>
     </string-array>
 </resources>

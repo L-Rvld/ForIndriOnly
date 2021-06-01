@@ -21,7 +21,7 @@ public class HomeFragment extends Fragment {
     CarouselView carouselView;
     TextView nama;
     Sharedprefs sharedprefs;
-    int[] imageP= {R.drawable.promo1, R.drawable.promo2, R.drawable.promo3, R.drawable.promo4, R.drawable.promo5};
+    int[] imageP= {R.drawable.banner1, R.drawable.banner2, R.drawable.banner3};
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

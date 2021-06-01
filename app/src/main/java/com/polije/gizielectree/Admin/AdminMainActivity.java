@@ -46,7 +46,7 @@ public class AdminMainActivity extends AppCompatActivity {
     Button chngPass, setPass;
     ImageButton close;
     TextInputEditText edtOldPass,edtNewPass, edtVPass;
-    CardView indxB, indxR, gotoList, gotoMaster;
+    CardView indxR, gotoList, gotoMaster;
     Dialog dialog;
     Sharedprefs sharedprefs;
     SqliteHelpers helpers;
@@ -58,7 +58,6 @@ public class AdminMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_main);
         chngPass = findViewById(R.id.btnChangePass);
-        indxB = findViewById(R.id.gotoIndexBMI);
         indxR = findViewById(R.id.gotoIndexRekom);
         gotoList = findViewById(R.id.gotoListUser);
         gotoMaster = findViewById(R.id.gotoDataMaster);
@@ -80,13 +79,13 @@ public class AdminMainActivity extends AppCompatActivity {
             }
         });
 
-        indxB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(AdminMainActivity.this,IndexActivity.class)
-                        .putExtra("req","bmi"));
-            }
-        });
+//        indxB.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(AdminMainActivity.this,IndexActivity.class)
+//                        .putExtra("req","bmi"));
+//            }
+//        });
         indxR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -168,9 +167,10 @@ public class AdminMainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if (!TextUtils.isEmpty(edtOldPass.getText().toString())&&!TextUtils.isEmpty(edtNewPass.getText().toString())&&!TextUtils.isEmpty(edtOldPass.getText().toString())) {
                     if (edtNewPass.getText().toString().equals(edtVPass.getText().toString())) {
-                        Toast.makeText(AdminMainActivity.this, "Password Baru tidak sesuai, ulangi", Toast.LENGTH_SHORT).show();
-                    } else {
                         Log.d("[RLOG]", "SetPass trigerred");
+                        setNewPass(edtNewPass.getText().toString());
+                    } else {
+                        Toast.makeText(AdminMainActivity.this, "Password Baru tidak sesuai, ulangi", Toast.LENGTH_SHORT).show();
                     }
                 }else if (TextUtils.isEmpty(edtOldPass.getText().toString())
                         &&TextUtils.isEmpty(edtNewPass.getText().toString())
@@ -189,7 +189,7 @@ public class AdminMainActivity extends AppCompatActivity {
             }
         });
     }
-    public void setNewPass(String oldPass, String newPass){
+    public void setNewPass(String newPass){
         StringRequest setnewPass = new StringRequest(Request.Method.POST, api + "/" + getString(R.string.newPass), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -197,9 +197,13 @@ public class AdminMainActivity extends AppCompatActivity {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     if (jsonObject.getString("error").equals("true")) {
-
+                        edtNewPass.setText("");
+                        edtOldPass.setText("");
+                        edtVPass.setText("");
+                        dialog.dismiss();
+                        Toast.makeText(AdminMainActivity.this, "Password Baru Berhasil Diganti", Toast.LENGTH_SHORT).show();
                     } else {
-
+                        Toast.makeText(AdminMainActivity.this, "Password Baru Gagal Diganti, Ulangi", Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -215,8 +219,7 @@ public class AdminMainActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> param = new HashMap<>();
-                param.put("oldPass",oldPass);
-                param.put("newPass",newPass);
+                param.put("newpass",newPass);
                 Log.d("TAG", "getParams: " + param);
                 return param;
             }

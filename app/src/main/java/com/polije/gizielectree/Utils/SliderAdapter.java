@@ -24,39 +24,22 @@ public class SliderAdapter extends PagerAdapter {
     //Array
     public int[] list_images={
 
-            R.drawable.promo1,
-            R.drawable.promo2,
-            R.drawable.promo3,
-            R.drawable.promo4
+            R.drawable.wscreen1,
+            R.drawable.wscreen2,
+            R.drawable.wscreen3
     };
 
-    public String[] list_title={
-
-            "Phone",
-            "Flight",
-            "Bus",
-            "Train"
-    };
-
-    public String[] list_description={
-
-            "Big discounts on Smart Phones",
-            "Upto 25% off on Domestic Flights",
-            "Enjoy Travelling on bus with flat 100 off",
-            "10% cashback on first train booking"
-    };
     public int[] list_color={
 
-            Color.rgb(193, 66, 44),
-            Color.rgb(193, 172, 44),
-            Color.rgb(193, 41, 249),
-            Color.rgb(68, 83, 242)
+            Color.rgb(255, 255, 51),
+            Color.rgb(0, 153, 0),
+            Color.rgb(255, 51, 51)
 
     };
 
     @Override
     public int getCount() {
-        return list_title.length;
+        return list_images.length;
     }
 
     @Override
@@ -72,13 +55,9 @@ public class SliderAdapter extends PagerAdapter {
 
         LinearLayout linearLayout = (LinearLayout)view.findViewById(R.id.slidelinearlayout);
         ImageView img = (ImageView)view.findViewById(R.id.slideimg);
-        TextView txt1 = (TextView) view.findViewById(R.id.slidetitle);
-        TextView txt2 = (TextView) view.findViewById(R.id.slidedescription);
 
 
         img.setImageResource(list_images[position]);
-        txt1.setText(list_title[position]);
-        txt2.setText(list_description[position]);
         linearLayout.setBackgroundColor(list_color[position]);
 
         container.addView(view);
