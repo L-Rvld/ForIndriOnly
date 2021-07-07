@@ -89,8 +89,7 @@ public class AdminMainActivity extends AppCompatActivity {
         indxR.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(AdminMainActivity.this,IndexActivity.class)
-                        .putExtra("req","rec"));
+                startActivity(new Intent(AdminMainActivity.this,IndexActivity.class));
             }
         });
         gotoMaster.setOnClickListener(new View.OnClickListener() {

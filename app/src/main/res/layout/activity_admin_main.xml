@@ -142,7 +142,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_marginTop="5dp"
-                            android:text="Index Rekomendasi"
+                            android:text="Data Aktifitas"
                             android:gravity="center"
                             android:textColor="@color/white"
                             android:textStyle="bold" />

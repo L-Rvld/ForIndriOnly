@@ -60,13 +60,13 @@ public class HomeFragment extends Fragment {
         tentang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(new Intent(getContext(),TentangActivity.class));
             }
         });
         akun.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(new Intent(getContext(),AkunActivity.class));
             }
         });
         return root;

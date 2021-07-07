@@ -21,15 +21,12 @@ import com.polije.gizielectree.Login;
 import com.polije.gizielectree.R;
 
 public class IndexActivity extends AppCompatActivity {
-    Bundle bundle;
     String TAG = "[RLog]";
-    LinearLayout lBMI,lRec, foc;
+    LinearLayout lBMI, foc;
     boolean isedit = false;
     Menu menus;
-    String req;
-    MenuItem save,close,edit;
-    TextInputEditText jkl, jkp, ai,as,ar,ab,asb;
-    TextInputEditText p,sp,s,ss,m,sm;
+    MenuItem save, close, edit, list;
+    TextInputEditText i, r, s, b, sb;
     AlertDialog.Builder aleBuilder;
 
     @Override
@@ -38,51 +35,20 @@ public class IndexActivity extends AppCompatActivity {
         setContentView(R.layout.activity_index);
         foc = findViewById(R.id.linefocus);
         lBMI = findViewById(R.id.lineBMI);
-        lRec = findViewById(R.id.lineRec);
-        aleBuilder = new AlertDialog.Builder(this,R.style.AlertDialog);
+        i = findViewById(R.id.eBMII);
+        r = findViewById(R.id.eBMIR);
+        s = findViewById(R.id.eBMIS);
+        b = findViewById(R.id.eBMIB);
+        sb = findViewById(R.id.eBMISB);
+        aleBuilder = new AlertDialog.Builder(this, R.style.AlertDialog);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-        bundle = getIntent().getExtras();
-        req = bundle.getString("req");
-        if (req.equals("bmi")){
-            getSupportActionBar().setTitle("Index BMI");
-//            openBMIMenu();
-        }else
-            if (req.equals("rec")){
-                getSupportActionBar().setTitle("Index Pekerjaan");
-                openRecMenu();
-        }
+
         this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
     }
 
-//    public void openBMIMenu(){
-//        lBMI.setVisibility(View.VISIBLE);
-//        lRec.setVisibility(View.GONE);
-//
-//        jkl = findViewById(R.id.eBMIJKL);
-//        jkp = findViewById(R.id.eBMIJKP);
-//        ai = findViewById(R.id.eBMII);
-//        as = findViewById(R.id.eBMIS);
-//        ar = findViewById(R.id.eBMIR);
-//        ab = findViewById(R.id.eBMIB);
-//        asb  = findViewById(R.id.eBMISB);
-//
-//    }
-
-    public void openRecMenu(){
-        lRec.setVisibility(View.VISIBLE);
-        lBMI.setVisibility(View.GONE);
-
-        p = findViewById(R.id.eRecP);
-        sp = findViewById(R.id.eRecSP);
-        s = findViewById(R.id.eRecS);
-        ss = findViewById(R.id.eRecSS);
-        m = findViewById(R.id.eRecM);
-        sm = findViewById(R.id.eRecSM);
-
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -92,17 +58,22 @@ public class IndexActivity extends AppCompatActivity {
         save = menus.findItem(R.id.saveindex);
         close = menus.findItem(R.id.closecancel);
         edit = menus.findItem(R.id.editindex);
-        if (!isedit){
+        list = menus.findItem(R.id.listing);
+        if (!isedit) {
             save.setVisible(false);
             close.setVisible(false);
         }
         return true;
     }
 
+    public void openList(){
+        startActivity(new Intent(IndexActivity.this,ListingAktifActivity.class));
+    }
+
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.editindex:
                 isedit = true;
                 openalert("edit");
@@ -116,7 +87,11 @@ public class IndexActivity extends AppCompatActivity {
             case R.id.closecancel:
                 isedit = false;
                 updateview();
-                closemode(req);
+                closemode();
+                return true;
+
+            case R.id.listing:
+                openList();
                 return true;
 
             default:
@@ -124,78 +99,45 @@ public class IndexActivity extends AppCompatActivity {
         }
     }
 
-    private void closemode(String req) {
-        if (req.equals("bmi")) {
-            jkl.setEnabled(false);
-            jkp.setEnabled(false);
-            ai.setEnabled(false);
-            as.setEnabled(false);
-            ar.setEnabled(false);
-            ab.setEnabled(false);
-            asb.setEnabled(false);
-        }else if (req.equals("rec")){
-            p.setEnabled(false);
-            sp.setEnabled(false);
-            s.setEnabled(false);
-            ss.setEnabled(false);
-            m.setEnabled(false);
-            sm.setEnabled(false);
-        }
+    private void closemode() {
+        i.setEnabled(false);
+        r.setEnabled(false);
+        s.setEnabled(false);
+        b.setEnabled(false);
+        sb.setEnabled(false);
         foc.requestFocus();
     }
 
-    private void editmode(String req) {
-        if (req.equals("bmi")) {
-            jkl.setEnabled(true);
-            jkp.setEnabled(true);
-            ai.setEnabled(true);
-            as.setEnabled(true);
-            ar.setEnabled(true);
-            ab.setEnabled(true);
-            asb.setEnabled(true);
-        }else if (req.equals("rec")){
-            p.setEnabled(true);
-            sp.setEnabled(true);
-            s.setEnabled(true);
-            ss.setEnabled(true);
-            m.setEnabled(true);
-            sm.setEnabled(true);
-        }
+    private void editmode() {
+        i.setEnabled(true);
+        s.setEnabled(true);
+        r.setEnabled(true);
+        b.setEnabled(true);
+        sb.setEnabled(true);
     }
 
-    private void saveindex(String req) {
-        if (req.equals("bmi")) {
-            jkl.setEnabled(true);
-            jkp.setEnabled(true);
-            ai.setEnabled(true);
-            as.setEnabled(true);
-            ar.setEnabled(true);
-            ab.setEnabled(true);
-            asb.setEnabled(true);
-        }else if (req.equals("rec")){
-            p.setEnabled(true);
-            sp.setEnabled(true);
-            s.setEnabled(true);
-            ss.setEnabled(true);
-            m.setEnabled(true);
-            sm.setEnabled(true);
-        }
+    private void saveindex() {
+        i.setEnabled(true);
+        s.setEnabled(true);
+        r.setEnabled(true);
+        b.setEnabled(true);
+        sb.setEnabled(true);
         foc.requestFocus();
     }
 
-    public void updateview(){
-        if (!isedit){
+    public void updateview() {
+        if (!isedit) {
             edit.setVisible(true);
             save.setVisible(false);
             close.setVisible(false);
-        }else {
+        } else {
             edit.setVisible(false);
             save.setVisible(true);
             close.setVisible(true);
         }
     }
 
-    public void openalert(String mode){
+    public void openalert(String mode) {
         if (mode.equals("edit")) {
             aleBuilder.setTitle("Edit Index");
             aleBuilder
@@ -204,7 +146,7 @@ public class IndexActivity extends AppCompatActivity {
                     .setCancelable(false)
                     .setPositiveButton("Ya, Lanjut", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            editmode(req);
+                            editmode();
                             updateview();
                         }
                     })
@@ -221,7 +163,7 @@ public class IndexActivity extends AppCompatActivity {
                     .setCancelable(false)
                     .setPositiveButton("Ya, Lanjut", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
-                            saveindex(req);
+                            saveindex();
                             updateview();
                         }
                     })
@@ -234,7 +176,6 @@ public class IndexActivity extends AppCompatActivity {
         AlertDialog alertDialog = aleBuilder.create();
         alertDialog.show();
     }
-    //after get, set to text temp for cancel
 
     @Override
     public boolean onSupportNavigateUp() {

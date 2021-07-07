@@ -12,9 +12,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Admin.ListuseronlyActivity"></activity>
-        <activity android:name=".Admin.IndexActivity" android:theme="@style/Mater" />
-        <activity android:name=".Admin.DatamasterActivity" android:theme="@style/Mater" />
+        <activity android:name=".Admin.ListingAktifActivity"></activity>
+        <activity android:name=".Admin.ListuseronlyActivity" />
+        <activity
+            android:name=".Admin.IndexActivity"
+            android:theme="@style/Mater" />
+        <activity
+            android:name=".Admin.DatamasterActivity"
+            android:theme="@style/Mater" />
         <activity android:name=".Admin.AdminMainActivity" />
         <activity android:name=".DetailActivity" />
         <activity android:name=".AkunActivity" />

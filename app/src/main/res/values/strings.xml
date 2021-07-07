@@ -69,38 +69,4 @@
         <item>OP</item>
     </string-array>
 
-    <string-array name="pekerjaan">
-        <item> </item>
-        <item> </item>
-        <item> </item>
-        <item> </item>
-        <item> </item>
-        <item> </item>
-        <item> </item>
-        <item> </item>
-        <item> </item>
-        <item> </item>
-        <item> </item>
-        <item> </item>
-        <item> </item>
-        <item> </item>
-        <item> </item>
-    </string-array>
-    <string-array name="valuepekerjaan">
-        <item> </item>
-        <item> </item>
-        <item> </item>
-        <item> </item>
-        <item> </item>
-        <item> </item>
-        <item> </item>
-        <item> </item>
-        <item> </item>
-        <item> </item>
-        <item> </item>
-        <item> </item>
-        <item> </item>
-        <item> </item>
-        <item> </item>
-    </string-array>
 </resources>
