@@ -4,60 +4,120 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="15dp"
     android:orientation="vertical"
+    android:padding="15dp"
     tools:context=".TentangActivity">
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_marginTop="30dp"
-        android:src="@drawable/logoapp"/>
-
+        android:src="@drawable/logoapp" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:padding="20sp"
-        android:textAlignment="center"
-        android:layout_gravity="center_horizontal"
-        android:text="Aplikasi ini dibuat sebagai persyaratan untuk memperoleh gelar Sarjana di Jurusan Teknologi Informasi Program Studi Teknik Informatika Politeknik Negeri Jember"/>
+        android:text="App Versi 1.1.5"
+        android:textSize="10sp"
+        android:textAlignment="center"/>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
+                android:layout_gravity="center_horizontal"
                 android:layout_marginTop="20dp"
-                android:text="Nama Aplikasi : GiziElectree"/>
+                android:padding="20sp"
+                android:text="Apa yang dimaksud aktifitas fisik?"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textStyle="bold" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:padding="10dp"
-                android:text="Judul Tugas Akhir :\n ....."
-                tools:ignore="RtlCompat" />
+                android:layout_gravity="center_horizontal"
+                android:text="Aktifitas yang dilakukan sehari-hari yang dapat mengurangi energi."
+                android:textAlignment="center" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="Nama : Indri Nur Hamida \nNIM     : ...."/>
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:padding="20sp"
+                android:text="Apa saja klasifikasi aktifitas fisik?"
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textStyle="bold" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="Pembimbing : ...."/>
+                android:layout_gravity="center_horizontal"
+                android:text="-\tIsitirahat : Tubuh tidak banyak melakukan aktifitas dan banyak beristirahat atau berbaring." />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="Pakar : ....."/>
+                android:layout_gravity="center_horizontal"
+                android:text="\t\t\t\tContoh: pasien atau sedang bedrest." />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="-\tRingan : Tubuh 75% digunakan untuk istirahat dan 25% digunakan untuk bergerak." />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="\t\t\t\tContoh: Pegawai kantor, Ibu rumah tangga, Tenaga pengajar, dll." />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="-\tSedang : Tubuh 25% digunakan untuk beristirahat dan 75% digunakan untuk kegiatan lainnya." />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="\t\t\t\tContoh: Pegawai Industri/Pabrik, Satpam, dll." />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="-\tBerat : Tubuh 40% waktu digunakan untuk beristirahat dan 60% digunakan beraktifitas dan bekerja." />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="\t\t\t\tContoh: Petani, Buruh, Militer, Atlet, dll." />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="-\tSangat Berat : Tubuh 20% istirahat dan 80% digunakan untuk beraktifitas dan melakukan pekerjaan."/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="\t\t\t\tContoh: Tukang becak, Kuli bangunan,Pandai besi, Tukang gali, dll." />
+
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

@@ -19,6 +19,8 @@ public class Sharedprefs {
     public final String berat = "berat";
     public final String id = "id";
     public final String is_admin = "is_admin";
+    public final String gula = "gula";
+
     public Sharedprefs(Context context){
         sp = context.getSharedPreferences(app_ta, Context.MODE_PRIVATE);
         spEditor = sp.edit();
@@ -80,6 +82,14 @@ public class Sharedprefs {
         spEditor.putString(keySP, value);
         spEditor.commit();
     }
+    public void saveGula(String keySP, String value){
+        spEditor.putString(keySP,value);
+        spEditor.commit();
+    }
+    public String getGula(){
+        return sp.getString(gula,"");
+    }
+
     public String getJK(){
         return sp.getString(jk, "");
     }

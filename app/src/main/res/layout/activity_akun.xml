@@ -18,7 +18,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="50dp"
                 android:padding="15dp">
 
                 <LinearLayout
@@ -84,62 +84,6 @@
                             android:hint="Jenis Kelamin"
                             android:text="Perempuan"
                             android:inputType="textPersonName"
-                            android:textColor="#849AA0"
-                            android:textColorHint="#4F9CB3"/>
-                    </com.google.android.material.textfield.TextInputLayout>
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp">
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:singleLine="true"
-                            android:id="@+id/profilumur"
-                            android:hint="Umur"
-                            android:text="19 Tahun"
-                            android:textColor="#849AA0"
-                            android:textColorHint="#4F9CB3"/>
-                    </com.google.android.material.textfield.TextInputLayout>
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp">
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:singleLine="true"
-                            android:id="@+id/profiltinggi"
-                            android:hint="Tinggi"
-                            android:text="167 CM"
-                            android:textColor="#849AA0"
-                            android:textColorHint="#4F9CB3"/>
-                    </com.google.android.material.textfield.TextInputLayout>
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp">
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:singleLine="true"
-                            android:id="@+id/profilberat"
-                            android:hint="Berat"
-                            android:text="70 KG"
-                            android:textColor="#849AA0"
-                            android:textColorHint="#4F9CB3"/>
-                    </com.google.android.material.textfield.TextInputLayout>
-                    <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp">
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:singleLine="true"
-                            android:id="@+id/profilpekerjaan"
-                            android:hint="Pekerjaan"
-                            android:text="Arsitektur"
                             android:textColor="#849AA0"
                             android:textColorHint="#4F9CB3"/>
                     </com.google.android.material.textfield.TextInputLayout>

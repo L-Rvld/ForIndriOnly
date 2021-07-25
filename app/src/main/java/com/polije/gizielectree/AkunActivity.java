@@ -14,6 +14,7 @@ import android.view.WindowManager;
 import android.widget.LinearLayout;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.polije.gizielectree.Utils.Sharedprefs;
 
 public class AkunActivity extends AppCompatActivity {
 
@@ -22,7 +23,8 @@ public class AkunActivity extends AppCompatActivity {
     MenuItem save, close, edit;
     boolean isedit = false;
     AlertDialog.Builder aleBuilder;
-    TextInputEditText e, n, jk, u, t, b, p;
+    TextInputEditText e, n, jk;
+    Sharedprefs sharedprefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,13 +32,18 @@ public class AkunActivity extends AppCompatActivity {
         setContentView(R.layout.activity_akun);
         foc = findViewById(R.id.linefos);
 
+        sharedprefs = new Sharedprefs(this);
+
         e = findViewById(R.id.profilemail);
         n = findViewById(R.id.profilnama);
         jk = findViewById(R.id.profiljk);
-        u = findViewById(R.id.profilumur);
-        t = findViewById(R.id.profiltinggi);
-        b = findViewById(R.id.profilberat);
-        p = findViewById(R.id.profilpekerjaan);
+
+        n.setText(sharedprefs.getuser());
+        if (sharedprefs.getJK().equals("25")){
+            jk.setText("Perempuan");
+        }else {
+            jk.setText("Laki - Laki");
+        }
 
         closemode();
         e.requestFocus();
@@ -73,29 +80,17 @@ public class AkunActivity extends AppCompatActivity {
     private void closemode() {
         n.setEnabled(false);
         jk.setEnabled(false);
-        u.setEnabled(false);
-        b.setEnabled(false);
-        t.setEnabled(false);
-        p.setEnabled(false);
         foc.requestFocus();
     }
 
     private void editmode() {
         n.setEnabled(true);
         jk.setEnabled(true);
-        u.setEnabled(true);
-        b.setEnabled(true);
-        t.setEnabled(true);
-        p.setEnabled(true);
     }
 
     private void saveindex() {
         n.setEnabled(true);
         jk.setEnabled(true);
-        u.setEnabled(true);
-        b.setEnabled(true);
-        t.setEnabled(true);
-        p.setEnabled(true);
         foc.requestFocus();
     }
 

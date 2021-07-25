@@ -28,7 +28,6 @@ public class ListingAktifActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("List Pekerjaan");
 
 
-
     }
     @Override
     public boolean onSupportNavigateUp() {
