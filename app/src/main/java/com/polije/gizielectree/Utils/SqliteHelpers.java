@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.Nullable;
 
 import com.polije.gizielectree.AdapModel.AdapTemp;
+import com.polije.gizielectree.AdapModel.ModelGula;
 import com.polije.gizielectree.AdapModel.ModelSave;
 
 import java.util.ArrayList;
@@ -31,6 +32,8 @@ public class SqliteHelpers extends SQLiteOpenHelper {
         db.execSQL(sql);
         String sql2 = "CREATE TABLE data_rekom (hari VARCHAR, id VARCHAR,nama VARCHAR,sumber VARCHAR, air VARCHAR,energi VARCHAR, protein VARCHAR,lemak VARCHAR,kh VARCHAR,serat VARCHAR,abu VARCHAR,kalsium VARCHAR,fosfor VARCHAR,besi VARCHAR,natrium VARCHAR,kalium VARCHAR,tembaga VARCHAR,seng VARCHAR,retinol VARCHAR,b_kar VARCHAR,kar_total VARCHAR,thiamin VARCHAR,riboflavin VARCHAR,niasin VARCHAR,vitc VARCHAR,bdd VARCHAR);";
         db.execSQL(sql2);
+        String sql3 = "CREATE TABLE data_gula (tgl VARCHAR, gula INTEGER)";
+        db.execSQL(sql3);
     }
 
     public void clear(){
@@ -83,6 +86,32 @@ public class SqliteHelpers extends SQLiteOpenHelper {
         }
         return lis;
     }
+    public List<ModelGula> getGula(){
+        List<ModelGula> lis = new ArrayList<>();
+        String selectQuery = "SELECT * FROM data_gula";
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        if (cursor.moveToFirst()){
+            do {
+                ModelGula gula = new ModelGula(cursor.getString(0),cursor.getInt(1));
+                lis.add(gula);
+            } while (cursor.moveToNext());
+        }
+        return lis;
+    }
+
+    public void addGula(String tgl, int gula){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("tgl", tgl);
+        contentValues.put("gula", gula);
+        db.insert("data_gula",null,contentValues);
+        db.close();
+    }
+
     public void addDataM(String hari, String id, String nama, String sumber, String air, String energi,
                          String protein, String lemak, String kh, String serat, String abu, String kalsium,
                          String fosfor, String besi, String natrium, String kalium, String tembaga, String seng,
@@ -130,6 +159,5 @@ public class SqliteHelpers extends SQLiteOpenHelper {
         db.execSQL(sql2);
         onCreate(db);
     }
-
 
 }

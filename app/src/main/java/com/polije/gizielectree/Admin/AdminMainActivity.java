@@ -46,7 +46,7 @@ public class AdminMainActivity extends AppCompatActivity {
     Button chngPass, setPass;
     ImageButton close;
     TextInputEditText edtOldPass,edtNewPass, edtVPass;
-    CardView indxR, gotoList, gotoMaster;
+    CardView gotoList, gotoMaster;
     Dialog dialog;
     Sharedprefs sharedprefs;
     SqliteHelpers helpers;
@@ -58,7 +58,6 @@ public class AdminMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_main);
         chngPass = findViewById(R.id.btnChangePass);
-        indxR = findViewById(R.id.gotoIndexRekom);
         gotoList = findViewById(R.id.gotoListUser);
         gotoMaster = findViewById(R.id.gotoDataMaster);
         dialog = new Dialog(this,android.R.style.ThemeOverlay_Material);
@@ -86,12 +85,6 @@ public class AdminMainActivity extends AppCompatActivity {
 //                        .putExtra("req","bmi"));
 //            }
 //        });
-        indxR.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(AdminMainActivity.this,IndexActivity.class));
-            }
-        });
         gotoMaster.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

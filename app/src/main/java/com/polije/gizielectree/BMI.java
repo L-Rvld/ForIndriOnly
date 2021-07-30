@@ -1,6 +1,7 @@
 package com.polije.gizielectree;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
@@ -8,6 +9,7 @@ import androidx.cardview.widget.CardView;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -25,7 +27,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.polije.gizielectree.AdapModel.AdapTemp;
+import com.polije.gizielectree.AdapModel.ModelGula;
 import com.polije.gizielectree.Utils.Sharedprefs;
+import com.polije.gizielectree.Utils.SqliteHelpers;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
 public class BMI extends AppCompatActivity {
     EditText pekerjaan, usia, tb,bb, kgul;
@@ -35,8 +45,7 @@ public class BMI extends AppCompatActivity {
     CardView cardView;
     Sharedprefs sharedprefs;
     RadioButton p, l;
-    Menu menus;
-    MenuItem lihat;
+    SqliteHelpers helpers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +54,7 @@ public class BMI extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle("Hitung Kalori");
+        helpers = new SqliteHelpers(this);
 
         p = findViewById(R.id.jkPer);
         l = findViewById(R.id.jkLaki);
@@ -67,7 +77,7 @@ public class BMI extends AppCompatActivity {
         cardView = findViewById(R.id.cardafterhitung);
 
         int di = Integer.parseInt(sharedprefs.getAktif()) / 10;
-        pekerjaan.setText(namaAktif[di]);
+        pekerjaan.setText(namaAktif[di-1]);
         poin.setText(sharedprefs.getAktif());
 
         usia.setText(sharedprefs.getUmur());
@@ -117,6 +127,9 @@ public class BMI extends AppCompatActivity {
                     InputMethodManager inputManager = (InputMethodManager)getSystemService(getApplicationContext().INPUT_METHOD_SERVICE);
                     inputManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
                     hitungBMI(Integer.parseInt(tb.getText().toString()),Integer.parseInt(bb.getText().toString()),Integer.parseInt(usia.getText().toString()),jnskl,Integer.parseInt(poin.getText().toString()),Integer.parseInt(kgul.getText().toString()));
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        addGul(Integer.parseInt(kgul.getText().toString()));
+                    }
                 }
             }
         });
@@ -143,6 +156,14 @@ public class BMI extends AppCompatActivity {
         onBackPressed();
         return true;
     }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public void addGul(int gula){
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd");
+        LocalDateTime now = LocalDateTime.now();
+        helpers.addGula(String.valueOf(dtf.format(now)),gula);
+    }
+
     public void hitungBMI(int tb, int bb, int umur, int jk, int aktif, int kadargula){
         sharedprefs.saveGula("gula",String.valueOf(kadargula));
         int kurangumur = 0;
@@ -211,25 +232,5 @@ public class BMI extends AppCompatActivity {
             txtgul.setText("Gula Darah Sangat Tinggi");
         }
         cardView.setVisibility(View.VISIBLE);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflate = getMenuInflater();
-        inflate.inflate(R.menu.menu_bmi, menu);
-        menus = menu;
-        return true;
-    }
-
-    @SuppressLint("NonConstantResourceId")
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.grafik:
-                startActivity(new Intent(BMI.this,GrafikBmi.class));
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
     }
 }

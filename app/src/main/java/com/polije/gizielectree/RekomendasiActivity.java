@@ -52,19 +52,18 @@ public class RekomendasiActivity extends AppCompatActivity {
 
     Sharedprefs sharedprefs;
     ProgressDialog progressDialog;
-    Double bb, aktif, umur;
-    Double pagi, sp, siang, ss, malam, sm;
+    Double bb, aktif, umur, tb;
+    Double pagi, sp, siang, ss, malam;
     String api, jk;
-    TextView kalori , kalfor, kp,ksp,ks,kss,km,ksm;
+    TextView kalori , kalfor, kp,ksp,ks,kss,km;
     WebApiService webApiService;
-    RecyclerView recyPagi,recySiang,recyMalam,recySP,recySS,recySM;
+    RecyclerView recyPagi,recySiang,recyMalam,recySP,recySS;
     AdapterRekomendasi adapterRekomendasi;
     ArrayList<ModelRekomendasi> listP = new ArrayList<>();
     ArrayList<ModelRekomendasi> listS = new ArrayList<>();
     ArrayList<ModelRekomendasi> listM = new ArrayList<>();
     ArrayList<ModelRekomendasi> listSP = new ArrayList<>();
     ArrayList<ModelRekomendasi> listSS = new ArrayList<>();
-    ArrayList<ModelRekomendasi> listSM = new ArrayList<>();
     Dialog dialog;
     RecyclerView recylerek;
     SearchView searchView;
@@ -73,7 +72,7 @@ public class RekomendasiActivity extends AppCompatActivity {
     ModelForReceiver model = new ModelForReceiver();
     Integer rekomenergi = 0;
     SqliteHelpers helpers = new SqliteHelpers(this);
-    int kalP, kalSP, kalS, kalSS, kalM, kalSM;
+    int kalP, kalSP, kalS, kalSS, kalM;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,13 +88,13 @@ public class RekomendasiActivity extends AppCompatActivity {
         bb = Double.parseDouble(sharedprefs.getBerat());
         aktif = Double.parseDouble(sharedprefs.getAktif());
         umur = Double.parseDouble(sharedprefs.getUmur());
+        tb = Double.parseDouble(sharedprefs.getTinggi());
         webApiService = new WebApiService();
         kp = findViewById(R.id.rekkP);
         ksp= findViewById(R.id.rekkSP);
         ks = findViewById(R.id.rekkS);
         kss = findViewById(R.id.rekkSS);
         km = findViewById(R.id.rekkM);
-        ksm = findViewById(R.id.rekkSM);
         api = webApiService.getApi_url();
         kalori = findViewById(R.id.txtRekomKalori);
         kalfor= findViewById(R.id.txtRekomFor);
@@ -142,7 +141,7 @@ public class RekomendasiActivity extends AppCompatActivity {
         } else {
             nilaijk = 25;
         }
-        getRekom(nilaijk, bb, aktif, umur);
+        getRekom(nilaijk, tb, aktif, umur);
 
         LocalBroadcastManager.getInstance(this).registerReceiver(mFromSendData,
                 new IntentFilter("passData"));
@@ -204,36 +203,55 @@ public class RekomendasiActivity extends AppCompatActivity {
         requestQueue.add(ambilData);
     }
 
-    public void getRekom(double jk, double bb, double aktif, double umur) {
+    public void getRekom(double jk, double tb, double aktif, double umur) {
         int kurangumur = 0;
-        if (umur < 40) {
+
+        if (umur <40){
             kurangumur = 0;
-        } else if (umur > 40 && umur < 60) {
-            kurangumur = 5;
-        } else if (umur >= 60 && umur < 70) {
+        }else if (umur >40 && umur<60){
+            kurangumur =5;
+        }else if (umur >= 60 && umur <70){
             kurangumur = 10;
-        } else if (umur > 70) {
+        }else if (umur>70){
             kurangumur = 20;
         }
-        double jkbb = jk * bb;
-        double kBasal = (jkbb * aktif) / 100;
-        double Kalori = jkbb + kBasal;
-        double ku = (Kalori * kurangumur) / 100;
-        double totalK = Kalori - ku;
-        kalori.setText(totalK+" Kkal");
-        //25, 5 ,30, 5, 30, 5;
+        /////////////////////
+        double tbt = (tb / 100.0);
+        double BBI;
+        double TB;
+        if (jk == 25){
+            TB = Math.pow(tbt,2);
+            BBI = TB * 21.0;
+        }else{
+            TB = Math.pow(tbt,2);
+            BBI = TB * 22.5;
+        }
 
-        pagi = totalK * 25 / 100;
-        sp = totalK * 5 / 100;
-        siang = totalK * 30 / 100;
-        ss = totalK * 5 / 100;
-        malam = totalK * 30 / 100;
-        sm = totalK * 5 / 100;
+        double basal;
+
+        if (jk == 25){
+            basal = BBI * 25.0;
+        }else{
+            basal = BBI * 30.0;
+        }
+
+        double energi;
+        double per = (aktif+10-kurangumur) / 100.0;
+        energi = basal + (basal*per);
+
+        kalori.setText(energi+" Kkal");
+        Log.d(TAG, "getRekom: "+energi);
+
+        pagi = energi * 25 / 100;
+        sp = energi * 10 / 100;
+        siang = energi * 30 / 100;
+        ss = energi * 10 / 100;
+        malam = energi * 25 / 100;
 
         if (sharedprefs.getRekom().equals("")) {
             progressDialog.setTitle("Mencari Rekomendasi Terbaik");
             progressDialog.show();
-            sendRekom(pagi, siang, malam, sp, ss, sm);
+            sendRekom(pagi, siang, malam, sp, ss);
         } else {
             progressDialog.setTitle("Menampilkan Rekomendasi Anda");
             progressDialog.show();
@@ -241,9 +259,9 @@ public class RekomendasiActivity extends AppCompatActivity {
         }
     }
 
-    public void sendRekom(final Double pagi, final Double siang, Double malam, Double sp, Double ss, Double sm) {
+    public void sendRekom(final Double pagi, final Double siang, Double malam, Double sp, Double ss) {
         helpers.clear();
-        String apiR = "?lowPagi=" + pagi + "&lowSiang=" + siang + "&lowMalam=" + malam + "&lowSP=" + sp + "&lowSS=" + ss + "&lowSM=" + sm;
+        String apiR = "?lowPagi=" + pagi + "&lowSiang=" + siang + "&lowMalam=" + malam + "&lowSP=" + sp + "&lowSS=" + ss;
         Log.d(TAG, "sendRekom: "+api+getString(R.string.rekomendasi) + apiR);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, api + getString(R.string.rekomendasi) + apiR,
                 new Response.Listener<String>() {
@@ -252,7 +270,7 @@ public class RekomendasiActivity extends AppCompatActivity {
                 try {
                     progressDialog.dismiss();
                     JSONObject jsonObject = new JSONObject(response);
-                    String[] object = {"pagi","siang","malam","snackpagi", "snacksiang","snackmalam"};
+                    String[] object = {"pagi","siang","malam","snackpagi", "snacksiang"};
                     Log.d(TAG, "onResponsess: "+jsonObject);
                     getObject(jsonObject,object);
                 } catch (JSONException e) {
@@ -351,14 +369,6 @@ public class RekomendasiActivity extends AppCompatActivity {
                             recySS.setAdapter(adapterRekomendasi);
                             adapterRekomendasi.notifyDataSetChanged();
                             break;
-                        case "snackmalam":
-                            kalSM += Integer.parseInt(object.getString("energi"));
-                            ksm.setText(kalSM+" kkal");
-                            listSM.add(modelRekomendasi);
-                            adapterRekomendasi = new AdapterRekomendasi(RekomendasiActivity.this, listSM,hari);
-                            recySM.setAdapter(adapterRekomendasi);
-                            adapterRekomendasi.notifyDataSetChanged();
-                            break;
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -397,9 +407,6 @@ public class RekomendasiActivity extends AppCompatActivity {
         recySS.setHasFixedSize(true);
         recySS.setLayoutManager(new LinearLayoutManager(RekomendasiActivity.this));
 
-        recySM = findViewById(R.id.recyRekomSM);
-        recySM.setHasFixedSize(true);
-        recySM.setLayoutManager(new LinearLayoutManager(RekomendasiActivity.this));
 
     }
     public BroadcastReceiver mFromSendData = new BroadcastReceiver() {
@@ -429,11 +436,6 @@ public class RekomendasiActivity extends AppCompatActivity {
                     break;
                 case "snacksiang":
                     listSS.remove(model.getPos());
-                    helpers.removeTemp(model.getId());
-                    getInfoID(intent.getStringExtra("id"), hari,true);
-                    break;
-                case "snackmalam":
-                    listSM.remove(model.getPos());
                     helpers.removeTemp(model.getId());
                     getInfoID(intent.getStringExtra("id"), hari,true);
                     break;
@@ -496,6 +498,12 @@ public class RekomendasiActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflate = getMenuInflater();
         inflate.inflate(R.menu.rekom_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
         return true;
     }
 
