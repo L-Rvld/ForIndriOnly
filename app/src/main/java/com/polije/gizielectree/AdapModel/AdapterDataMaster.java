@@ -318,7 +318,7 @@ public class AdapterDataMaster extends RecyclerView.Adapter<AdapterDataMaster.Da
                     bdd.setText(object.getString("bdd"));
                     protein.setText(object.getString("protein"));
                     lemak.setText(object.getString("lemak"));
-                    karbo.setText(object.getString("kh"));
+                    karbo.setText(object.getString("karbo"));
 
                     add.setOnClickListener(new View.OnClickListener() {
                         @Override

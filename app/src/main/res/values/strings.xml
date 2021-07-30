@@ -13,60 +13,19 @@
     <string name="newPass">admin_change.php</string>
     <string name="admin_master">admin_master.php</string>
     <string-array name="kategori">
-        <item>SEREALIA (Tunggal)</item>
-        <item>SEREALIA (Olahan/Produk)</item>
-        <item>UMBI BERPATI</item>
-        <item>UMBI BERPATI (Olahan/Produk)</item>
-        <item>KACANG dan BIJI</item>
-        <item>KACANG dan BIJI (Olahan/Produk)</item>
+        <item>KARBOHIDRAT</item>
         <item>SAYURAN</item>
-        <item>SAYURAN (Olahan/Produk)</item>
+        <item>PROTEIN HEWANI</item>
+        <item>PROTEIN NABATI</item>
         <item>BUAH</item>
-        <item>BUAH (Olahan/Produk)</item>
-        <item>DAGING dan UNGGAS</item>
-        <item>DAGING dan UNGGAS (Olahan/Produk)</item>
-        <item>IKAN, KERANG, UDANG</item>
-        <item>IKAN, KERANG, UDANG (Olahan/Produk)</item>
-        <item>TELUR</item>
-        <item>TELUR (Olahan/Produk)</item>
-        <item>SUSU</item>
-        <item>SUSU (Olahan/Produk)</item>
-        <item>LEMAK DAN MINYAK</item>
-        <item>LEMAK DAN MINYAK (Olahan/Produk)</item>
-        <item>GULA, SIRUP dan KONFEKSIONERI</item>
-        <item>GULA, SIRUP dan KONFEKSIONERI (Olahan/Produk)</item>
-        <item>BUMBU</item>
-        <item>BUMBU (Olahan/Produk)</item>
-        <item>MINUMAN</item>
-        <item>LAINNYA</item>
+
     </string-array>
     <string-array name="kode">
-        <item>AR</item>
-        <item>AP</item>
-        <item>BR</item>
-        <item>BP</item>
-        <item>CR</item>
-        <item>CP</item>
-        <item>DR</item>
-        <item>DP</item>
-        <item>ER</item>
-        <item>EP</item>
-        <item>FR</item>
-        <item>FP</item>
-        <item>GR</item>
-        <item>GP</item>
-        <item>HR</item>
-        <item>HP</item>
-        <item>JR</item>
-        <item>JP</item>
-        <item>KR</item>
-        <item>KP</item>
-        <item>MR</item>
-        <item>MP</item>
-        <item>NR</item>
-        <item>NP</item>
-        <item>QR</item>
-        <item>OP</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
     </string-array>
 
 </resources>

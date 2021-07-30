@@ -59,7 +59,7 @@ public class DatamasterActivity extends AppCompatActivity {
     Dialog dialog;
     ImageButton closes;
     Button add;
-    TextInputEditText nama, jns, enrg, sumber, bdd, protein, lemak, karbo;
+    TextInputEditText nama, jns, enrg, bdd, protein, lemak, karbo;
     String[] kategori,kodes;
 
     @Override
@@ -181,7 +181,6 @@ public class DatamasterActivity extends AppCompatActivity {
         nama = dialog.findViewById(R.id.eDMNama);
         jns = dialog.findViewById(R.id.eDMJenis);
         enrg = dialog.findViewById(R.id.eDMEnergi);
-        sumber = dialog.findViewById(R.id.eDMSumber);
         bdd = dialog.findViewById(R.id.eDMBDD);
         protein = dialog.findViewById(R.id.eDMProtein);
         lemak = dialog.findViewById(R.id.eDMLemak);
@@ -214,16 +213,15 @@ public class DatamasterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (!TextUtils.isEmpty(nama.getText())&&!TextUtils.isEmpty(jns.getText())&&!TextUtils.isEmpty(enrg.getText())
-                        &&!TextUtils.isEmpty(sumber.getText())&&!TextUtils.isEmpty(bdd.getText())){
+                        &&!TextUtils.isEmpty(bdd.getText())){
 
                     getSeq(koded[0]);
 
                 }else if (TextUtils.isEmpty(nama.getText())&&TextUtils.isEmpty(jns.getText())&&TextUtils.isEmpty(enrg.getText())
-                        && TextUtils.isEmpty(sumber.getText())&&TextUtils.isEmpty(bdd.getText())){
+                        && TextUtils.isEmpty(bdd.getText())){
                     nama.setError("Isi Nama Makanan / Minuman");
                     jns.setError("Pilih Jenis Makanan / Minuman");
                     enrg.setError("Isi Data Energi");
-                    sumber.setError("Isi Sumber Makanan / Minuman");
                     bdd.setError("Isi BDD");
                 }else if (TextUtils.isEmpty(nama.getText())){
                     nama.setError("Isi Nama Makanan / Minuman");
@@ -231,8 +229,6 @@ public class DatamasterActivity extends AppCompatActivity {
                     jns.setError("Pilih Jenis Makanan / Minuman");
                 }else if (TextUtils.isEmpty(enrg.getText())){
                     enrg.setError("Isi Data Energi");
-                }else if (TextUtils.isEmpty(sumber.getText())){
-                    sumber.setError("Isi Sumber Makanan / Minuman");
                 }else if (TextUtils.isEmpty(bdd.getText())){
                     bdd.setError("Isi BDD");
                 }
@@ -250,35 +246,9 @@ public class DatamasterActivity extends AppCompatActivity {
     public void getSeq(String id){
         progressDialog.setTitle("Menambah Data ...");
         progressDialog.show();
-        StringRequest seq = new StringRequest(Request.Method.GET, apiService.getApi_url() + "getSeq.php"+"?id="+id, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.d("TASsssS", "onResponse: "+response);
-                String s;
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    String idnya = jsonObject.getString("result");
-                    int idx = Integer.parseInt(idnya)+1;
-                    String nextID = id+""+idx;
-
-                    adding(t(nama),nextID,t(enrg),t(sumber),t(bdd),t(protein), t(lemak), t(karbo));
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    progressDialog.dismiss();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("TAG", "onErrorResponse: " + error);
-                progressDialog.dismiss();
-            }
-        });
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(seq);
+        adding(t(nama),id,t(enrg),t(bdd),t(protein), t(lemak), t(karbo));
     }
-    public void adding(String nama, String ID, String energi, String jenis, String bdd, String protein, String lemak, String karbo){
+    public void adding(String nama, String energi, String jenis, String bdd, String protein, String lemak, String karbo){
         StringRequest adder = new StringRequest(Request.Method.POST, apiService.getApi_url() + getString(R.string.admin_master), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -313,10 +283,12 @@ public class DatamasterActivity extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> param = new HashMap<>();
                 param.put("nama",nama);
+                param.put("jns",jenis);
                 param.put("enrg",energi);
                 param.put("bdd",bdd);
                 param.put("protein",protein);
                 param.put("lemak",lemak);
+                param.put("karbo",karbo);
                 param.put("action","add");
 //                param.put("",);
                 Log.d("TAG", "getParams: " + param);
@@ -340,7 +312,6 @@ public class DatamasterActivity extends AppCompatActivity {
         nama.setText("");
         jns.setText("");
         enrg.setText("");
-        sumber.setText("");
         bdd.setText("");
         protein.setText("0");
         lemak.setText("0");
