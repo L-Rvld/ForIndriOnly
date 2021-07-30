@@ -16,7 +16,7 @@
             android:layout_height="0dp"
             android:visibility="gone" />
         <TextView
-            android:id="@+id/rekomSumber"
+            android:id="@+id/rekomJenis"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:visibility="gone" />
@@ -36,87 +36,7 @@
             android:layout_height="0dp"
             android:visibility="gone" />
         <TextView
-            android:id="@+id/rekomKh"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:visibility="gone" />
-        <TextView
-            android:id="@+id/rekomSerat"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:visibility="gone" />
-        <TextView
-            android:id="@+id/rekomAbu"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:visibility="gone" />
-        <TextView
-            android:id="@+id/rekomKalsium"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:visibility="gone" />
-        <TextView
-            android:id="@+id/rekomFosfor"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:visibility="gone" />
-        <TextView
-            android:id="@+id/rekomBesi"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:visibility="gone" />
-        <TextView
-            android:id="@+id/rekomNatrium"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:visibility="gone" />
-        <TextView
-            android:id="@+id/rekomKalium"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:visibility="gone" />
-        <TextView
-            android:id="@+id/rekomTembaga"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:visibility="gone" />
-        <TextView
-            android:id="@+id/rekomSeng"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:visibility="gone" />
-        <TextView
-            android:id="@+id/rekomRetinol"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:visibility="gone" />
-        <TextView
-            android:id="@+id/rekomBkar"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:visibility="gone" />
-        <TextView
-            android:id="@+id/rekomKarTot"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:visibility="gone" />
-        <TextView
-            android:id="@+id/rekomThiamin"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:visibility="gone" />
-        <TextView
-            android:id="@+id/rekomRiboflavin"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:visibility="gone" />
-        <TextView
-            android:id="@+id/rekomNiasin"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:visibility="gone" />
-        <TextView
-            android:id="@+id/rekomVitC"
+            android:id="@+id/rekomKarbo"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:visibility="gone" />

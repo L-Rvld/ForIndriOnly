@@ -50,8 +50,7 @@ public class AdapterDataMaster extends RecyclerView.Adapter<AdapterDataMaster.Da
     WebApiService apiService;
     ProgressDialog progressDialog;
     Dialog dialog;
-    TextInputEditText nama, jns, enrg, sumber, bdd, air, protein, lemak,    karbo,
-            serat, abu, kalsium, fsfr, besi, ntrium, kalium, tmbg, seng, rtnl, bkar, ktot, thmn, rbfln, nsin, vtc;
+    TextInputEditText nama, jns, enrg, bdd, protein, lemak, karbo;
     ImageButton closes;
     Button add;
     String[] kodes;
@@ -204,28 +203,11 @@ public class AdapterDataMaster extends RecyclerView.Adapter<AdapterDataMaster.Da
         nama = dialog.findViewById(R.id.eDMNama);
         jns = dialog.findViewById(R.id.eDMJenis);
         enrg = dialog.findViewById(R.id.eDMEnergi);
-        sumber = dialog.findViewById(R.id.eDMSumber);
         bdd = dialog.findViewById(R.id.eDMBDD);
-        air = dialog.findViewById(R.id.eDMAir);
         protein = dialog.findViewById(R.id.eDMProtein);
         lemak = dialog.findViewById(R.id.eDMLemak);
         karbo = dialog.findViewById(R.id.eDMKH);
-        serat = dialog.findViewById(R.id.eDMSerat);
-        abu = dialog.findViewById(R.id.eDMAbu);
-        kalsium = dialog.findViewById(R.id.eDMKalsium);
-        fsfr = dialog.findViewById(R.id.eDMFosfor);
-        besi = dialog.findViewById(R.id.eDMBesi);
-        ntrium = dialog.findViewById(R.id.eDMNatrium);
-        kalium = dialog.findViewById(R.id.eDMKalium);
-        tmbg = dialog.findViewById(R.id.eDMTembaga);
-        seng = dialog.findViewById(R.id.eDMSeng);
-        rtnl = dialog.findViewById(R.id.eDMRetinol);
-        bkar = dialog.findViewById(R.id.eDMBKAR);
-        ktot = dialog.findViewById(R.id.eDMKarTot);
-        thmn = dialog.findViewById(R.id.eDMThiamin);
-        rbfln = dialog.findViewById(R.id.eDMRiboflavin);
-        nsin = dialog.findViewById(R.id.eDMNiasin);
-        vtc = dialog.findViewById(R.id.eDMVitC);
+
         TextView txt = dialog.findViewById(R.id.textAtas);
         txt.setText("Ubah Data");
 
@@ -258,9 +240,7 @@ public class AdapterDataMaster extends RecyclerView.Adapter<AdapterDataMaster.Da
         });
     }
 
-    public void gotUp(String nama, String kode, String energi, String sumber, String bdd, String air, String protein, String lemak, String kh,
-                      String serat, String abu, String kalsium, String fosfor, String besi, String natrium, String kalium,
-                      String tmbga, String seng, String retinol, String bkar, String kartot, String thiamin, String ribo, String nsin, String vtc, String oldKode, int position) {
+    public void gotUp(String nama, String kode, String energi, String jenis, String bd, String protein, String lemak, String karbo, String oldKode, int position) {
 
         StringRequest upd = new StringRequest(Request.Method.POST, apiService.getApi_url() + context.getString(R.string.admin_master), new Response.Listener<String>() {
             @Override
@@ -296,28 +276,9 @@ public class AdapterDataMaster extends RecyclerView.Adapter<AdapterDataMaster.Da
                 param.put("nama", nama);
                 param.put("jns", kode);
                 param.put("enrg", energi);
-                param.put("sumber", sumber);
-                param.put("bdd", bdd);
-                param.put("air", air);
+                param.put("bdd", bd);
                 param.put("protein", protein);
                 param.put("lemak", lemak);
-                param.put("karbo", kh);
-                param.put("serat", serat);
-                param.put("abu", abu);
-                param.put("kalsium", kalsium);
-                param.put("fsfr", fosfor);
-                param.put("besi", besi);
-                param.put("ntrium", natrium);
-                param.put("kalium", kalium);
-                param.put("tmbg", tmbga);
-                param.put("seng", seng);
-                param.put("rtnl", retinol);
-                param.put("bkar", bkar);
-                param.put("ktot", kartot);
-                param.put("thmn", thiamin);
-                param.put("rbfln", ribo);
-                param.put("nsin", nsin);
-                param.put("vtc", vtc);
                 param.put("action", "update");
                 param.put("oldkode", oldKode);
                 Log.d("TAG", "getParams: " + param);
@@ -354,35 +315,16 @@ public class AdapterDataMaster extends RecyclerView.Adapter<AdapterDataMaster.Da
                     nama.setText(object.getString("nama"));
                     jns.setText(kates[pos]);
                     enrg.setText(object.getString("energi"));
-                    sumber.setText(object.getString("sumber"));
                     bdd.setText(object.getString("bdd"));
-
-                    air.setText(object.getString("air"));
                     protein.setText(object.getString("protein"));
                     lemak.setText(object.getString("lemak"));
                     karbo.setText(object.getString("kh"));
-                    serat.setText(object.getString("serat"));
-                    abu.setText(object.getString("abu"));
-                    kalsium.setText(object.getString("kalsium"));
-                    fsfr.setText(object.getString("fosfor"));
-                    besi.setText(object.getString("besi"));
-                    ntrium.setText(object.getString("natrium"));
-                    kalium.setText(object.getString("kalium"));
-                    tmbg.setText(object.getString("tembaga"));
-                    seng.setText(object.getString("seng"));
-                    rtnl.setText(object.getString("retinol"));
-                    bkar.setText(object.getString("b_kar"));
-                    ktot.setText(object.getString("kar_total"));
-                    thmn.setText(object.getString("thiamin"));
-                    rbfln.setText(object.getString("riboflavin"));
-                    nsin.setText(object.getString("niasin"));
-                    vtc.setText(object.getString("vitc"));
 
                     add.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
                             if (!TextUtils.isEmpty(nama.getText())&&!TextUtils.isEmpty(jns.getText())&&!TextUtils.isEmpty(enrg.getText())
-                                    &&!TextUtils.isEmpty(sumber.getText())&&!TextUtils.isEmpty(bdd.getText())) {
+                                    &&!TextUtils.isEmpty(bdd.getText())) {
                                 AlertDialog.Builder aleBuilder = new AlertDialog.Builder(context);
                                 aleBuilder.setTitle("Alert");
                                 aleBuilder
@@ -394,9 +336,7 @@ public class AdapterDataMaster extends RecyclerView.Adapter<AdapterDataMaster.Da
                                                 String nextID = null;
                                                 Log.d("TAG", "onClick: kate = " + kate + " ,, koded = " + kode);
                                                 if (koded[0].equals(kate)) {
-                                                    gotUp(t(nama), kode, t(enrg), t(sumber), t(bdd), t(air), t(protein), t(lemak), t(karbo),
-                                                            t(serat), t(abu), t(kalsium), t(fsfr), t(besi), t(ntrium), t(kalium), t(tmbg),
-                                                            t(seng), t(rtnl), t(bkar), t(ktot), t(thmn), t(rbfln), t(nsin), t(vtc), oldid,position);
+                                                    gotUp(t(nama), kode, t(jns), t(enrg), t(bdd), t(protein), t(lemak), t(karbo), oldid,position);
                                                 } else {
                                                     getSeq(koded[0], kode,position);
                                                 }
@@ -410,11 +350,10 @@ public class AdapterDataMaster extends RecyclerView.Adapter<AdapterDataMaster.Da
                                 AlertDialog alertDialog = aleBuilder.create();
                                 alertDialog.show();
                             }else if (TextUtils.isEmpty(nama.getText())&&TextUtils.isEmpty(jns.getText())&&TextUtils.isEmpty(enrg.getText())
-                                    && TextUtils.isEmpty(sumber.getText())&&TextUtils.isEmpty(bdd.getText())){
+                                    &&TextUtils.isEmpty(bdd.getText())){
                                 nama.setError("Isi Nama Makanan / Minuman");
                                 jns.setError("Pilih Jenis Makanan / Minuman");
                                 enrg.setError("Isi Data Energi");
-                                sumber.setError("Isi Sumber Makanan / Minuman");
                                 bdd.setError("Isi BDD");
                             }else if (TextUtils.isEmpty(nama.getText())){
                                 nama.setError("Isi Nama Makanan / Minuman");
@@ -422,8 +361,6 @@ public class AdapterDataMaster extends RecyclerView.Adapter<AdapterDataMaster.Da
                                 jns.setError("Pilih Jenis Makanan / Minuman");
                             }else if (TextUtils.isEmpty(enrg.getText())){
                                 enrg.setError("Isi Data Energi");
-                            }else if (TextUtils.isEmpty(sumber.getText())){
-                                sumber.setError("Isi Sumber Makanan / Minuman");
                             }else if (TextUtils.isEmpty(bdd.getText())){
                                 bdd.setError("Isi BDD");
                             }
@@ -464,9 +401,7 @@ public class AdapterDataMaster extends RecyclerView.Adapter<AdapterDataMaster.Da
                     int idx = Integer.parseInt(idnya) + 1;
                     String nextID = id + "" + idx;
 
-                    gotUp(t(nama), nextID, t(enrg), t(sumber), t(bdd), t(air), t(protein), t(lemak), t(karbo),
-                            t(serat), t(abu), t(kalsium), t(fsfr), t(besi), t(ntrium), t(kalium), t(tmbg),
-                            t(seng), t(rtnl), t(bkar), t(ktot), t(thmn), t(rbfln), t(nsin), t(vtc), oldid, position );
+                    gotUp(t(nama), nextID, t(enrg), t(jns), t(bdd), t(protein), t(lemak), t(karbo), oldid, position );
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -489,28 +424,9 @@ public class AdapterDataMaster extends RecyclerView.Adapter<AdapterDataMaster.Da
         nama.setText("");
         jns.setText("");
         enrg.setText("");
-        sumber.setText("");
         bdd.setText("");
-
-        air.setText("0");
         protein.setText("0");
         lemak.setText("0");
         karbo.setText("0");
-        serat.setText("0");
-        abu.setText("0");
-        kalsium.setText("0");
-        fsfr.setText("0");
-        besi.setText("0");
-        ntrium.setText("0");
-        kalium.setText("0");
-        tmbg.setText("0");
-        seng.setText("0");
-        rtnl.setText("0");
-        bkar.setText("0");
-        ktot.setText("0");
-        thmn.setText("0");
-        rbfln.setText("0");
-        nsin.setText("0");
-        vtc.setText("0");
     }
 }

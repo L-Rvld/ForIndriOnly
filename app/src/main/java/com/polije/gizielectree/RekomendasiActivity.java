@@ -21,6 +21,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -323,11 +324,8 @@ public class RekomendasiActivity extends AppCompatActivity {
                     energi[0] = Integer.parseInt(object.getString("energi"));
                     rekomenergi += energi[0];
                     kalfor.setText(rekomenergi+" Kkal");
-                    ModelRekomendasi modelRekomendasi = new ModelRekomendasi(object.getString("id"),object.getString("nama"),object.getString("sumber"),
-                            object.getString("air"),object.getString("energi"),object.getString("protein"),object.getString("lemak"),object.getString("kh"),
-                            object.getString("serat"),object.getString("abu"),object.getString("kalsium"),object.getString("fosfor"),object.getString("besi"),object.getString("natrium"),
-                            object.getString("kalium"),object.getString("tembaga"),object.getString("seng"),object.getString("retinol"),object.getString("b_kar"),object.getString("kar_total"),
-                            object.getString("thiamin"),object.getString("riboflavin"),object.getString("niasin"),object.getString("vitc"),object.getString("bdd"));
+                    ModelRekomendasi modelRekomendasi = new ModelRekomendasi(object.getString("id"),object.getString("nama"),object.getString("jenis"),object.getString("energi"),object.getString("protein"),object.getString("lemak"),
+                            object.getString("protein"),object.getString("bdd"));
                     switch (hari) {
                         case "pagi":
                             kalP += Integer.parseInt(object.getString("energi"));
@@ -453,17 +451,22 @@ public class RekomendasiActivity extends AppCompatActivity {
     };
 
     public void saveRekom(){
-        sharedprefs.saveRekom(sharedprefs.rekom,"save");
-        progressDialog.setTitle("Menyimpan Rekomendasi ...");
-        progressDialog.show();
-        List<AdapTemp> list = new ArrayList<>();
-        list = helpers.getTemp();
-        for (int j = 0; j < list.size(); j++) {
-            String id = list.get(j).getId();
-            String hari = list.get(j).getHari();
-            savePerId(id,hari);
+        if (sharedprefs.getRekom().isEmpty()) {
+            sharedprefs.saveRekom(sharedprefs.rekom, "save");
+            progressDialog.setTitle("Menyimpan Rekomendasi ...");
+            progressDialog.show();
+            List<AdapTemp> list = new ArrayList<>();
+            list = helpers.getTemp();
+            for (int j = 0; j < list.size(); j++) {
+                String id = list.get(j).getId();
+                String hari = list.get(j).getHari();
+                savePerId(id, hari);
+            }
+            progressDialog.dismiss();
+            Toast.makeText(this, "Rekomendasi Anda Sudah Tersimpan", Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(this, "Rekomendasi Anda Sudah Tersimpan", Toast.LENGTH_SHORT).show();
         }
-        progressDialog.dismiss();
     }
     public void savePerId(String id, String hari){
         StringRequest stringRequest = new StringRequest(Request.Method.GET, api + getString(R.string.getDetail) + "?id="+id, new Response.Listener<String>() {
@@ -473,11 +476,7 @@ public class RekomendasiActivity extends AppCompatActivity {
                     JSONObject jsonObject = new JSONObject(response);
                     JSONArray jsonArray = jsonObject.getJSONArray("result");
                     JSONObject object = jsonArray.getJSONObject(0);
-                    helpers.addDataM(hari,object.getString("id"),object.getString("nama"),object.getString("sumber"),
-                            object.getString("air"),object.getString("energi"),object.getString("protein"),object.getString("lemak"),object.getString("kh"),
-                            object.getString("serat"),object.getString("abu"),object.getString("kalsium"),object.getString("fosfor"),object.getString("besi"),object.getString("natrium"),
-                            object.getString("kalium"),object.getString("tembaga"),object.getString("seng"),object.getString("retinol"),object.getString("b_kar"),object.getString("kar_total"),
-                            object.getString("thiamin"),object.getString("riboflavin"),object.getString("niasin"),object.getString("vitc"),object.getString("bdd"));
+                    helpers.addDataM(hari,object.getString("id"),object.getString("nama"),object.getString("jenis"),object.getString("energi"),object.getString("protein"),object.getString("lemak"),object.getString("karbo"),object.getString("bdd"));
 
                 } catch (JSONException e) {
                     e.printStackTrace();

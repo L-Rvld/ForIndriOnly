@@ -30,7 +30,7 @@ public class SqliteHelpers extends SQLiteOpenHelper {
         String sql = "CREATE TABLE " + TABLE_NAME
                 + "(id_temp INTEGER PRIMARY KEY AUTOINCREMENT, status VARCHAR, idR VARCHAR);";
         db.execSQL(sql);
-        String sql2 = "CREATE TABLE data_rekom (hari VARCHAR, id VARCHAR,nama VARCHAR,sumber VARCHAR, air VARCHAR,energi VARCHAR, protein VARCHAR,lemak VARCHAR,kh VARCHAR,serat VARCHAR,abu VARCHAR,kalsium VARCHAR,fosfor VARCHAR,besi VARCHAR,natrium VARCHAR,kalium VARCHAR,tembaga VARCHAR,seng VARCHAR,retinol VARCHAR,b_kar VARCHAR,kar_total VARCHAR,thiamin VARCHAR,riboflavin VARCHAR,niasin VARCHAR,vitc VARCHAR,bdd VARCHAR);";
+        String sql2 = "CREATE TABLE data_rekom (hari VARCHAR, id VARCHAR,nama VARCHAR,jenis VARCHAR, energi VARCHAR, protein VARCHAR,lemak VARCHAR,karbo VARCHAR,bdd VARCHAR);";
         db.execSQL(sql2);
         String sql3 = "CREATE TABLE data_gula (tgl VARCHAR, gula INTEGER)";
         db.execSQL(sql3);
@@ -80,7 +80,7 @@ public class SqliteHelpers extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()){
             do {
-                ModelSave save = new ModelSave(cursor.getString(0),cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getString(6),cursor.getString(7),cursor.getString(8),cursor.getString(9),cursor.getString(10),cursor.getString(11),cursor.getString(12),cursor.getString(13),cursor.getString(14),cursor.getString(15),cursor.getString(16),cursor.getString(17),cursor.getString(18),cursor.getString(19),cursor.getString(20),cursor.getString(21),cursor.getString(22),cursor.getString(23),cursor.getString(24),cursor.getString(25));
+                ModelSave save = new ModelSave(cursor.getString(0),cursor.getString(1),cursor.getString(2),cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getString(6),cursor.getString(7),cursor.getString(8));
                 lis.add(save);
             } while (cursor.moveToNext());
         }
@@ -112,40 +112,18 @@ public class SqliteHelpers extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void addDataM(String hari, String id, String nama, String sumber, String air, String energi,
-                         String protein, String lemak, String kh, String serat, String abu, String kalsium,
-                         String fosfor, String besi, String natrium, String kalium, String tembaga, String seng,
-                         String retinol, String b_kar, String kar_total, String thiamin, String riboflavin,
-                         String niasin, String vitc, String bdd) {
+    public void addDataM(String hari, String id, String nama, String jenis, String energi,
+                         String protein, String lemak, String karbo, String bdd) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put("hari", hari);
         contentValues.put("id", id);
         contentValues.put("nama", nama);
-        contentValues.put("sumber", sumber);
-        contentValues.put("air", air);
+        contentValues.put("jenis", jenis);
         contentValues.put("energi", energi);
         contentValues.put("protein", protein);
+        contentValues.put("karbo", karbo);
         contentValues.put("lemak", lemak);
-        contentValues.put("kh", kh);
-        contentValues.put("serat", serat);
-        contentValues.put("abu", abu);
-        contentValues.put("kalsium", kalsium);
-        contentValues.put("fosfor", fosfor);
-        contentValues.put("besi", besi);
-        contentValues.put("natrium", natrium);
-        contentValues.put("besi", besi);
-        contentValues.put("fosfor", fosfor);
-        contentValues.put("kalium", kalium);
-        contentValues.put("tembaga", tembaga);
-        contentValues.put("seng", seng);
-        contentValues.put("retinol", retinol);
-        contentValues.put("b_kar", b_kar);
-        contentValues.put("kar_total", kar_total);
-        contentValues.put("thiamin", thiamin);
-        contentValues.put("riboflavin", riboflavin);
-        contentValues.put("niasin", niasin);
-        contentValues.put("vitc", vitc);
         contentValues.put("bdd", bdd);
         db.insert("data_rekom",null,contentValues);
         db.close();

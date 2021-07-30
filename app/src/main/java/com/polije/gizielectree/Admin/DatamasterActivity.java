@@ -59,8 +59,7 @@ public class DatamasterActivity extends AppCompatActivity {
     Dialog dialog;
     ImageButton closes;
     Button add;
-    TextInputEditText nama, jns, enrg, sumber, bdd, air, protein, lemak, karbo,
-    serat, abu, kalsium, fsfr, besi, ntrium, kalium, tmbg, seng, rtnl, bkar, ktot, thmn, rbfln, nsin, vtc;
+    TextInputEditText nama, jns, enrg, sumber, bdd, protein, lemak, karbo;
     String[] kategori,kodes;
 
     @Override
@@ -184,26 +183,9 @@ public class DatamasterActivity extends AppCompatActivity {
         enrg = dialog.findViewById(R.id.eDMEnergi);
         sumber = dialog.findViewById(R.id.eDMSumber);
         bdd = dialog.findViewById(R.id.eDMBDD);
-        air = dialog.findViewById(R.id.eDMAir);
         protein = dialog.findViewById(R.id.eDMProtein);
         lemak = dialog.findViewById(R.id.eDMLemak);
         karbo = dialog.findViewById(R.id.eDMKH);
-        serat = dialog.findViewById(R.id.eDMSerat);
-        abu = dialog.findViewById(R.id.eDMAbu);
-        kalsium = dialog.findViewById(R.id.eDMKalsium);
-        fsfr = dialog.findViewById(R.id.eDMFosfor);
-        besi = dialog.findViewById(R.id.eDMBesi);
-        ntrium = dialog.findViewById(R.id.eDMNatrium);
-        kalium = dialog.findViewById(R.id.eDMKalium);
-        tmbg = dialog.findViewById(R.id.eDMTembaga);
-        seng = dialog.findViewById(R.id.eDMSeng);
-        rtnl = dialog.findViewById(R.id.eDMRetinol);
-        bkar = dialog.findViewById(R.id.eDMBKAR);
-        ktot = dialog.findViewById(R.id.eDMKarTot);
-        thmn = dialog.findViewById(R.id.eDMThiamin);
-        rbfln = dialog.findViewById(R.id.eDMRiboflavin);
-        nsin = dialog.findViewById(R.id.eDMNiasin);
-        vtc = dialog.findViewById(R.id.eDMVitC);
     }
 
     private void openDialog() {
@@ -279,9 +261,7 @@ public class DatamasterActivity extends AppCompatActivity {
                     int idx = Integer.parseInt(idnya)+1;
                     String nextID = id+""+idx;
 
-                    adding(t(nama),nextID,t(enrg),t(sumber),t(bdd),t(air),t(protein), t(lemak), t(karbo),
-                            t(serat), t(abu), t(kalsium), t(fsfr), t(besi), t(ntrium), t(kalium), t(tmbg),
-                            t(seng), t(rtnl), t(bkar), t(ktot), t(thmn), t(rbfln), t(nsin), t(vtc));
+                    adding(t(nama),nextID,t(enrg),t(sumber),t(bdd),t(protein), t(lemak), t(karbo));
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -298,9 +278,7 @@ public class DatamasterActivity extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(seq);
     }
-    public void adding(String nama, String kode, String energi, String sumber, String bdd, String air, String protein, String lemak, String kh,
-                       String serat, String abu, String kalsium, String fosfor, String besi, String natrium, String kalium,
-                       String tmbga, String seng, String retinol, String bkar, String kartot, String thiamin, String ribo, String nsin, String vtc){
+    public void adding(String nama, String ID, String energi, String jenis, String bdd, String protein, String lemak, String karbo){
         StringRequest adder = new StringRequest(Request.Method.POST, apiService.getApi_url() + getString(R.string.admin_master), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -335,30 +313,10 @@ public class DatamasterActivity extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> param = new HashMap<>();
                 param.put("nama",nama);
-                param.put("jns",kode);
                 param.put("enrg",energi);
-                param.put("sumber",sumber);
                 param.put("bdd",bdd);
-                param.put("air",air);
                 param.put("protein",protein);
                 param.put("lemak",lemak);
-                param.put("karbo",kh);
-                param.put("serat",serat);
-                param.put("abu",abu);
-                param.put("kalsium",kalsium);
-                param.put("fsfr",fosfor);
-                param.put("besi",besi);
-                param.put("ntrium",natrium);
-                param.put("kalium",kalium);
-                param.put("tmbg",tmbga);
-                param.put("seng",seng);
-                param.put("rtnl",retinol);
-                param.put("bkar",bkar);
-                param.put("ktot",kartot);
-                param.put("thmn",thiamin);
-                param.put("rbfln",ribo);
-                param.put("nsin",nsin);
-                param.put("vtc",vtc);
                 param.put("action","add");
 //                param.put("",);
                 Log.d("TAG", "getParams: " + param);
@@ -384,26 +342,8 @@ public class DatamasterActivity extends AppCompatActivity {
         enrg.setText("");
         sumber.setText("");
         bdd.setText("");
-
-        air.setText("0");
         protein.setText("0");
         lemak.setText("0");
         karbo.setText("0");
-        serat.setText("0");
-        abu.setText("0");
-        kalsium.setText("0");
-        fsfr.setText("0");
-        besi.setText("0");
-        ntrium.setText("0");
-        kalium.setText("0");
-        tmbg.setText("0");
-        seng.setText("0");
-        rtnl.setText("0");
-        bkar.setText("0");
-        ktot.setText("0");
-        thmn.setText("0");
-        rbfln.setText("0");
-        nsin.setText("0");
-        vtc.setText("0");
     }
 }
