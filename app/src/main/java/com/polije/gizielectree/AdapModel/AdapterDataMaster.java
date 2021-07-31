@@ -56,6 +56,7 @@ public class AdapterDataMaster extends RecyclerView.Adapter<AdapterDataMaster.Da
     String[] kodes;
     String[] kates;
     final String[] koded = new String[1];
+    AlertDialog.Builder aleBuilder;
 
     public AdapterDataMaster(Context context, ArrayList<ModelData> dataList, ProgressDialog progressDialog, Dialog dialog) {
         this.context = context;
@@ -65,6 +66,7 @@ public class AdapterDataMaster extends RecyclerView.Adapter<AdapterDataMaster.Da
         this.dialog = dialog;
         kodes = context.getResources().getStringArray(R.array.kode);
         kates = context.getResources().getStringArray(R.array.kategori);
+        aleBuilder = new AlertDialog.Builder(context);
     }
 
     @NonNull
@@ -89,9 +91,9 @@ public class AdapterDataMaster extends RecyclerView.Adapter<AdapterDataMaster.Da
         holder.lineact.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
                 String[] items = {"Edit", "Hapus"};
-                builder.setItems(items, new DialogInterface.OnClickListener() {
+                aleBuilder.setItems(items, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         switch (which) {
@@ -122,7 +124,7 @@ public class AdapterDataMaster extends RecyclerView.Adapter<AdapterDataMaster.Da
                         }
                     }
                 });
-                Dialog d = builder.show();
+                Dialog d = aleBuilder.show();
                 return true;
             }
         });
@@ -240,7 +242,7 @@ public class AdapterDataMaster extends RecyclerView.Adapter<AdapterDataMaster.Da
         });
     }
 
-    public void gotUp(String nama, String kode, String energi, String jenis, String bd, String protein, String lemak, String karbo, String oldKode, int position) {
+    public void gotUp(String nama, String kode, String energi, String jenis, String bd, String protein, String lemak, String karbo, int position) {
 
         StringRequest upd = new StringRequest(Request.Method.POST, apiService.getApi_url() + context.getString(R.string.admin_master), new Response.Listener<String>() {
             @Override
@@ -274,13 +276,14 @@ public class AdapterDataMaster extends RecyclerView.Adapter<AdapterDataMaster.Da
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> param = new HashMap<>();
                 param.put("nama", nama);
-                param.put("jns", kode);
+                param.put("jns", jenis);
                 param.put("enrg", energi);
                 param.put("bdd", bd);
                 param.put("protein", protein);
                 param.put("lemak", lemak);
+                param.put("karbo",karbo);
                 param.put("action", "update");
-                param.put("oldkode", oldKode);
+                param.put("oldkode", kode);
                 Log.d("TAG", "getParams: " + param);
                 return param;
             }
@@ -301,16 +304,13 @@ public class AdapterDataMaster extends RecyclerView.Adapter<AdapterDataMaster.Da
                     JSONObject object = jsonArray.getJSONObject(0);
 
                     String kode = object.getString("id");
-                    String kate = kode.substring(0, 2);
-                    koded[0] = kate;
 
                     int pos = 0;
                     for (int i = 0; i < kodes.length; i++) {
-                        if (kodes[i].contains(kate)) {
+                        if (kodes[i].contains(kode)) {
                             pos = i;
                         }
                     }
-                    Log.d("KATELOG", "onResponse: " + kate + " KATE nya == " + kates[pos]);
 
                     nama.setText(object.getString("nama"));
                     jns.setText(kates[pos]);
@@ -325,7 +325,6 @@ public class AdapterDataMaster extends RecyclerView.Adapter<AdapterDataMaster.Da
                         public void onClick(View v) {
                             if (!TextUtils.isEmpty(nama.getText())&&!TextUtils.isEmpty(jns.getText())&&!TextUtils.isEmpty(enrg.getText())
                                     &&!TextUtils.isEmpty(bdd.getText())) {
-                                AlertDialog.Builder aleBuilder = new AlertDialog.Builder(context);
                                 aleBuilder.setTitle("Alert");
                                 aleBuilder
                                         .setMessage("Periksa dahulu, Apakah anda yakin ingin mengubah data ini?")
@@ -334,12 +333,7 @@ public class AdapterDataMaster extends RecyclerView.Adapter<AdapterDataMaster.Da
                                         .setPositiveButton("Ya",new DialogInterface.OnClickListener() {
                                             public void onClick(DialogInterface dialog,int id) {
                                                 String nextID = null;
-                                                Log.d("TAG", "onClick: kate = " + kate + " ,, koded = " + kode);
-                                                if (koded[0].equals(kate)) {
-                                                    gotUp(t(nama), kode, t(jns), t(enrg), t(bdd), t(protein), t(lemak), t(karbo), oldid,position);
-                                                } else {
-                                                    getSeq(koded[0], kode,position);
-                                                }
+                                                gotUp(t(nama),oldid, t(enrg), t(jns), t(bdd), t(protein), t(lemak), t(karbo), position);
                                             }
                                         })
                                         .setNegativeButton("Tidak",new DialogInterface.OnClickListener() {
@@ -389,36 +383,6 @@ public class AdapterDataMaster extends RecyclerView.Adapter<AdapterDataMaster.Da
         return t.getText().toString();
     }
 
-    public void getSeq(String id, String oldid, int position) {
-        StringRequest seq = new StringRequest(Request.Method.GET, apiService.getApi_url() + "getSeq.php" + "?id=" + id, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.d("TASsssS", "onResponse: " + response);
-                String s;
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    String idnya = jsonObject.getString("result");
-                    int idx = Integer.parseInt(idnya) + 1;
-                    String nextID = id + "" + idx;
-
-                    gotUp(t(nama), nextID, t(enrg), t(jns), t(bdd), t(protein), t(lemak), t(karbo), oldid, position );
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    progressDialog.dismiss();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("TAG", "onErrorResponse: " + error);
-                progressDialog.dismiss();
-            }
-        });
-        RequestQueue requestQueue = Volley.newRequestQueue(context);
-        requestQueue.add(seq);
-
-    }
 
     public void clearingText() {
         nama.setText("");
