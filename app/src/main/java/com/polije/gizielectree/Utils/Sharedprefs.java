@@ -14,6 +14,7 @@ public class Sharedprefs {
     public final String user = "user";
     public final String umur = "umur";
     public final String jk = "jk";
+    public final String email = "email";
     public final String aktif = "aktif";
     public final String tinggi = "tinggi";
     public final String berat = "berat";
@@ -37,6 +38,13 @@ public class Sharedprefs {
     public void saveusername(String keySP, String value){
         spEditor.putString(keySP, value);
         spEditor.commit();
+    }
+    public void saveEmail(String keySP, String value){
+        spEditor.putString(keySP, value);
+        spEditor.commit();
+    }
+    public String getEmail(){
+        return sp.getString(email, "");
     }
     public String getuser(){
         return sp.getString(user, "");

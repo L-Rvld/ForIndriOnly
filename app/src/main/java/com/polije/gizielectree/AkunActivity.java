@@ -5,16 +5,34 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.textfield.TextInputEditText;
 import com.polije.gizielectree.Utils.Sharedprefs;
+import com.polije.gizielectree.Utils.ToastBaseCust;
+import com.polije.gizielectree.Utils.WebApiService;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class AkunActivity extends AppCompatActivity {
 
@@ -25,12 +43,20 @@ public class AkunActivity extends AppCompatActivity {
     AlertDialog.Builder aleBuilder;
     TextInputEditText e, n, jk;
     Sharedprefs sharedprefs;
+    WebApiService apiService;
+    ProgressDialog progressDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_akun);
         foc = findViewById(R.id.linefos);
+        apiService = new WebApiService();
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setCancelable(false);
+        progressDialog.setIndeterminate(true);
 
         sharedprefs = new Sharedprefs(this);
 
@@ -47,6 +73,7 @@ public class AkunActivity extends AppCompatActivity {
 
         closemode();
         e.requestFocus();
+        e.setText(sharedprefs.getEmail());
 
         aleBuilder = new AlertDialog.Builder(this, R.style.AlertDialog);
 
@@ -99,10 +126,12 @@ public class AkunActivity extends AppCompatActivity {
             edit.setVisible(true);
             save.setVisible(false);
             close.setVisible(false);
+            foc.requestFocus();
         } else {
             edit.setVisible(false);
             save.setVisible(true);
             close.setVisible(true);
+            foc.requestFocus();
         }
     }
 
@@ -132,6 +161,7 @@ public class AkunActivity extends AppCompatActivity {
                     .setCancelable(false)
                     .setPositiveButton("Ya, Lanjut", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
+                            saving(n.getText().toString(),e.getText().toString());
                             saveindex();
                             updateview();
                         }
@@ -146,6 +176,47 @@ public class AkunActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
+    public void saving(String snama, String semail){
+        StringRequest adder = new StringRequest(Request.Method.POST, apiService.getApi_url() + "user_master.php", new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    if (jsonObject.getString("error").equals("false")) {
+                        Toast.makeText(AkunActivity.this, "OKE", Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
+                        foc.requestFocus();
+                    }else {
+                        Toast.makeText(AkunActivity.this, "GAGAL", Toast.LENGTH_SHORT).show();
+                        progressDialog.dismiss();
+                        foc.requestFocus();
+                    }
+                } catch (JSONException e) {
+                    progressDialog.dismiss();
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                progressDialog.dismiss();
+                Log.d("TAG", "onErrorResponse: " + error);
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> param = new HashMap<>();
+                param.put("action","saveProfile");
+                param.put("nama",snama);
+                param.put("email",semail);
+                Log.d("TAG", "getParams: " + param);
+                return param;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        requestQueue.add(adder);
+    }
+
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -158,6 +229,8 @@ public class AkunActivity extends AppCompatActivity {
             case R.id.saveindex:
                 isedit = false;
                 openalert("save");
+                updateview();
+                closemode();
                 return true;
 
             case R.id.closecancel:

@@ -32,6 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:textSize="18sp"
+        android:id="@+id/skrgG"
         android:layout_marginLeft="10dp"
         android:text="GULA DARAH SAAT INI : 000 mg/dl"/>
 
@@ -40,6 +41,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:textSize="18sp"
+            android:id="@+id/tinggiG"
             android:layout_marginLeft="10dp"
             android:text="GULA DARAH TERTINGGI : 000 mg/dl"/>
         <TextView
@@ -47,6 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:textSize="18sp"
+            android:id="@+id/rendahG"
             android:layout_marginLeft="10dp"
             android:layout_marginBottom="10dp"
             android:text="GULA DARAH TERENDAH : 000 mg/dl"/>

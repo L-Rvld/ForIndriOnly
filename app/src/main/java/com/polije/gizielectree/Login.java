@@ -34,7 +34,7 @@ public class Login extends AppCompatActivity {
     Button register,login;
     String api;
     WebApiService webApiService;
-    TextInputEditText email, pass;
+    TextInputEditText temail, pass;
     Sharedprefs sharedprefs;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +42,7 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         login = findViewById(R.id.login);
         register = findViewById(R.id.btn_gotoreg);
-        email = findViewById(R.id.logUser);
+        temail = findViewById(R.id.logUser);
         pass = findViewById(R.id.logPass);
         webApiService = new WebApiService();
         api = webApiService.getApi_url();
@@ -57,15 +57,15 @@ public class Login extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!TextUtils.isEmpty(email.getText())&&!TextUtils.isEmpty(pass.getText())) {
-                    if (email.getText().toString().equals("admin_")){
+                if (!TextUtils.isEmpty(temail.getText())&&!TextUtils.isEmpty(pass.getText())) {
+                    if (temail.getText().toString().equals("admin_")){
                         reqAdm(pass.getText().toString());
                     }else {
-                        reqLog(email.getText().toString(), pass.getText().toString());
+                        reqLog(temail.getText().toString(), pass.getText().toString());
                     }
-                }else if (TextUtils.isEmpty(email.getText())){
+                }else if (TextUtils.isEmpty(temail.getText())){
                     Toast.makeText(Login.this, "Email Kosong", Toast.LENGTH_SHORT).show();
-                    email.setError("Masukan Email");
+                    temail.setError("Masukan Email");
                 }else if (TextUtils.isEmpty(pass.getText())){
                     Toast.makeText(Login.this, "Password Kosong", Toast.LENGTH_SHORT).show();
                     pass.setError("Masukan Password");
@@ -120,6 +120,7 @@ public class Login extends AppCompatActivity {
                     if (jsonObject.getString("error").equals("false")) {
                         sharedprefs.savelogin("onLogin",true);
                         sharedprefs.saveLevel("is_admin",false);
+                        sharedprefs.saveEmail("email",temail.getText().toString());
                         sharedprefs.saveID(sharedprefs.id,jsonObject.getJSONObject("user").getString("id"));
                         sharedprefs.saveusername(sharedprefs.user,jsonObject.getJSONObject("user").getString("username"));
                         sharedprefs.saveJK(sharedprefs.jk,jsonObject.getJSONObject("user").getString("jk"));
