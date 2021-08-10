@@ -1,29 +1,22 @@
 package com.polije.gizielectree;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentPagerAdapter;
-import androidx.viewpager.widget.ViewPager;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
 
-import com.polije.gizielectree.Admin.AdminMainActivity;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+
 import com.polije.gizielectree.Utils.Sharedprefs;
 import com.polije.gizielectree.Utils.SqliteHelpers;
-import com.polije.gizielectree.Utils.WebApiService;
-import com.synnapps.carouselview.CarouselView;
-import com.synnapps.carouselview.ImageListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     ViewPager vp;
     SqliteHelpers helpers;
     Sharedprefs sharedprefs;
+    Bundle bundle;
 
     AlertDialog.Builder aleBuilder;
     @Override
@@ -44,6 +38,10 @@ public class MainActivity extends AppCompatActivity {
         aleBuilder = new AlertDialog.Builder(this);
         sharedprefs = new Sharedprefs(this);
         helpers = new SqliteHelpers(this);
+        bundle = new Bundle();
+        bundle.putString("gula",sharedprefs.getGula());
+        CatatanFragment catatanFragment = new CatatanFragment();
+        catatanFragment.setArguments(bundle);
     }
     private void setupViewPager(ViewPager viewPager) {
         Adapter adapter = new Adapter(getSupportFragmentManager());

@@ -4,7 +4,9 @@ import android.graphics.Color;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,30 +29,43 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class CatatanFragment extends Fragment {
+public class CatatanFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     SqliteHelpers helpers;
     TextView tinggi,rendah,skrg;
-    Sharedprefs sharedprefs;
     String gula;
+    SwipeRefreshLayout swipeRefreshLayout;
+    BarChart barChart;
+    ArrayList<BarEntry> kgul;
+    List<Integer> poss;
+    List<ModelGula> list;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_catatan, container, false);
 
-        BarChart barChart = root.findViewById(R.id.barChart);
+        barChart = root.findViewById(R.id.barChart);
         helpers = new SqliteHelpers(getContext());
         tinggi = root.findViewById(R.id.tinggiG);
         rendah = root.findViewById(R.id.rendahG);
         skrg = root.findViewById(R.id.skrgG);
-        sharedprefs = new Sharedprefs(getContext());
-        gula = sharedprefs.getGula();
+        swipeRefreshLayout = root.findViewById(R.id.swipenote);
+
+        swipeRefreshLayout.setOnRefreshListener(this);
+
+        getGet(barChart);
+
+        return root;
+    }
+
+    public void getGet(BarChart barChart){
+        gula = getArguments().getString("gula");
 
 
-        ArrayList<BarEntry> kgul = new ArrayList<>();
-        List<Integer> poss = new ArrayList<>();
+        kgul = new ArrayList<>();
+        poss = new ArrayList<>();
 
-        List<ModelGula> list = new ArrayList<>();
+        list = new ArrayList<>();
         list = helpers.getGula();
         for (int j = 0; j < list.size(); j++) {
             String tgl = list.get(j).getTgl();
@@ -84,7 +99,23 @@ public class CatatanFragment extends Fragment {
         barChart.setData(barData);
         barChart.getDescription().setText("Bar Gula Darah / Tanggal");
         barChart.animateY(2000);
+    }
 
-        return root;
+    @Override
+    public void onRefresh() {
+        tinggi.setText("GULA DARAH TERTINGGI : 0 mg/dl");
+        tinggi.setText("GULA DARAH TERENDAH : 0 mg/dl");
+        skrg.setText("GULA DARAH SAAT INI : 0 mg/dl");
+        kgul.clear();
+        poss.clear();
+        list.clear();
+
+        getGet(barChart);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        }, 2000);
     }
 }
