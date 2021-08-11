@@ -72,7 +72,7 @@ public class BMI extends AppCompatActivity {
         getSupportActionBar().setTitle("Hitung Kalori");
         helpers = new SqliteHelpers(this);
         apiService = new WebApiService();
-
+        progressDialog = new ProgressDialog(this);
         p = findViewById(R.id.jkPer);
         l = findViewById(R.id.jkLaki);
 

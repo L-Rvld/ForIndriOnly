@@ -32,11 +32,11 @@ import java.util.List;
 public class CatatanFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
     SqliteHelpers helpers;
     TextView tinggi,rendah,skrg;
-    String gula;
     SwipeRefreshLayout swipeRefreshLayout;
     BarChart barChart;
     ArrayList<BarEntry> kgul;
     List<Integer> poss;
+    Sharedprefs sharedprefs;
     List<ModelGula> list;
 
     @Override
@@ -44,14 +44,14 @@ public class CatatanFragment extends Fragment implements SwipeRefreshLayout.OnRe
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_catatan, container, false);
 
-        barChart = root.findViewById(R.id.barChart);
         helpers = new SqliteHelpers(getContext());
         tinggi = root.findViewById(R.id.tinggiG);
         rendah = root.findViewById(R.id.rendahG);
         skrg = root.findViewById(R.id.skrgG);
+        sharedprefs = new Sharedprefs(getContext());
         swipeRefreshLayout = root.findViewById(R.id.swipenote);
-
         swipeRefreshLayout.setOnRefreshListener(this);
+        barChart = root.findViewById(R.id.barChart);
 
         getGet(barChart);
 
@@ -59,8 +59,6 @@ public class CatatanFragment extends Fragment implements SwipeRefreshLayout.OnRe
     }
 
     public void getGet(BarChart barChart){
-        gula = getArguments().getString("gula");
-
 
         kgul = new ArrayList<>();
         poss = new ArrayList<>();
@@ -73,12 +71,12 @@ public class CatatanFragment extends Fragment implements SwipeRefreshLayout.OnRe
             kgul.add(new BarEntry(Integer.parseInt(tgl),gula));
             poss.add(gula);
         }
-        if (!poss.isEmpty()){
+        if (!poss.isEmpty() && !sharedprefs.getGula().isEmpty()){
             int posMax = Collections.max(poss);
             int posMin = Collections.min(poss);
             tinggi.setText("GULA DARAH TERTINGGI : "+posMax+" mg/dl");
-            tinggi.setText("GULA DARAH TERENDAH : "+posMin+" mg/dl");
-            skrg.setText("GULA DARAH SAAT INI : "+gula+" mg/dl");
+            rendah.setText("GULA DARAH TERENDAH : "+posMin+" mg/dl");
+            skrg.setText("GULA DARAH SAAT INI : "+sharedprefs.getGula()+" mg/dl");
         }
 
         BarDataSet barDataSet = new BarDataSet(kgul,"Gula Darah");
@@ -104,7 +102,7 @@ public class CatatanFragment extends Fragment implements SwipeRefreshLayout.OnRe
     @Override
     public void onRefresh() {
         tinggi.setText("GULA DARAH TERTINGGI : 0 mg/dl");
-        tinggi.setText("GULA DARAH TERENDAH : 0 mg/dl");
+        rendah.setText("GULA DARAH TERENDAH : 0 mg/dl");
         skrg.setText("GULA DARAH SAAT INI : 0 mg/dl");
         kgul.clear();
         poss.clear();

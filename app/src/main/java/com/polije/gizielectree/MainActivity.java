@@ -25,7 +25,6 @@ public class MainActivity extends AppCompatActivity {
     ViewPager vp;
     SqliteHelpers helpers;
     Sharedprefs sharedprefs;
-    Bundle bundle;
 
     AlertDialog.Builder aleBuilder;
     @Override
@@ -38,10 +37,6 @@ public class MainActivity extends AppCompatActivity {
         aleBuilder = new AlertDialog.Builder(this);
         sharedprefs = new Sharedprefs(this);
         helpers = new SqliteHelpers(this);
-        bundle = new Bundle();
-        bundle.putString("gula",sharedprefs.getGula());
-        CatatanFragment catatanFragment = new CatatanFragment();
-        catatanFragment.setArguments(bundle);
     }
     private void setupViewPager(ViewPager viewPager) {
         Adapter adapter = new Adapter(getSupportFragmentManager());
