@@ -34,13 +34,11 @@ public class DataActivity extends AppCompatActivity {
     ArrayList<ModelData> list = new ArrayList<>();
     WebApiService apiService;
     SearchView searchView;
-    Bundle bundle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data);
-        bundle = getIntent().getExtras();
 
         apiService = new WebApiService();
         recyclerView = findViewById(R.id.recyData);

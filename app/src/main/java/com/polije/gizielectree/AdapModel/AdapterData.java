@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.polije.gizielectree.DetailActivity;
 import com.polije.gizielectree.R;
 
 import java.util.ArrayList;
@@ -43,7 +44,7 @@ public class AdapterData extends RecyclerView.Adapter<AdapterData.DataViewHolder
         holder.linedet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("asasas", "onClick: "+dataList.get(position).id_kode);
+                context.startActivity(new Intent(context, DetailActivity.class).putExtra("id",dataList.get(position).id_kode));
             }
         });
     }

@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.polije.gizielectree.DetailActivity;
 import com.polije.gizielectree.R;
 
 import java.util.ArrayList;
@@ -45,7 +46,7 @@ public class AdapterSendData extends RecyclerView.Adapter<AdapterSendData.DataVi
         holder.linedet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                context.startActivity(new Intent(context, DetailActivity.class).putExtra("id",dataList.get(position).id_kode));
             }
         });
         holder.lineganti.setOnClickListener(new View.OnClickListener() {

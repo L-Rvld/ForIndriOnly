@@ -31,6 +31,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.textfield.TextInputEditText;
 import com.polije.gizielectree.Admin.AdminMainActivity;
+import com.polije.gizielectree.DetailActivity;
 import com.polije.gizielectree.Login;
 import com.polije.gizielectree.R;
 import com.polije.gizielectree.Utils.ToastBaseCust;
@@ -85,7 +86,7 @@ public class AdapterDataMaster extends RecyclerView.Adapter<AdapterDataMaster.Da
         holder.linedet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("Asasas", "onClick: " + dataList.get(position).id_kode);
+                context.startActivity(new Intent(context,DetailActivity.class).putExtra("id",dataList.get(position).id_kode));
             }
         });
         holder.lineact.setOnLongClickListener(new View.OnLongClickListener() {
