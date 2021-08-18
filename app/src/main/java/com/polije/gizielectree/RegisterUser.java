@@ -44,8 +44,9 @@ public class RegisterUser extends AppCompatActivity {
     Button btnregister;
     WebApiService webApiService;
     Bundle bundle;
-    ArrayList<String> aktifitas = new ArrayList<>();
-    ArrayList<String> point = new ArrayList<>();
+//    ArrayList<String> aktifitas = new ArrayList<>();
+//    ArrayList<String> point = new ArrayList<>();
+    final String [] namaAktif ={"Istirahat","Ringan","Sedang","Berat","Sangat Berat"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +68,6 @@ public class RegisterUser extends AppCompatActivity {
         api = webApiService.getApi_url();
         bundle = getIntent().getExtras();
 
-        getPekerjaan();
 
         if (!bundle.isEmpty()) {
             user.setText(bundle.getString("user"));
@@ -78,16 +78,18 @@ public class RegisterUser extends AppCompatActivity {
             onBackPressed();
         }
 
-        final ArrayAdapter<String> adapterAktif = new ArrayAdapter<String>(this,android.R.layout.select_dialog_item, aktifitas);
+        final ArrayAdapter<String> adapterAktif = new ArrayAdapter<String>(this,android.R.layout.select_dialog_item, namaAktif);
+
         pekerjaan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 new AlertDialog.Builder(RegisterUser.this).setTitle("Pilih aktifitas anda :").setAdapter(adapterAktif, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        pekerjaan.setText(aktifitas.get(i).toString());
-                        int p = Integer.parseInt(point.get(i))*10;
-                        poin.setText(""+p);
+                        int id = i+1;
+                        int aktifno = id * 10;
+                        pekerjaan.setText(namaAktif[i].toString());
+                        poin.setText(""+aktifno);
                         dialogInterface.dismiss();
                     }
                 }).create().show();
@@ -144,32 +146,32 @@ public class RegisterUser extends AppCompatActivity {
             }
         });
     }
-    public void getPekerjaan(){
-        StringRequest ambilData = new StringRequest(Request.Method.GET, webApiService.getApi_url() + "getPekerjaan.php", new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    JSONArray jsonArray = jsonObject.getJSONArray("result");
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        JSONObject jsonObject1 = jsonArray.getJSONObject(i);
-                        aktifitas.add(jsonObject1.getString("pek"));
-                        point.add(jsonObject1.getString("nilai"));
-                    }
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.d("TAG", "onErrorResponse: " + error);
-            }
-        });
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        requestQueue.add(ambilData);
-    }
+//    public void getPekerjaan(){
+//        StringRequest ambilData = new StringRequest(Request.Method.GET, webApiService.getApi_url() + "getPekerjaan.php", new Response.Listener<String>() {
+//            @Override
+//            public void onResponse(String response) {
+//                try {
+//                    JSONObject jsonObject = new JSONObject(response);
+//                    JSONArray jsonArray = jsonObject.getJSONArray("result");
+//                    for (int i = 0; i < jsonArray.length(); i++) {
+//                        JSONObject jsonObject1 = jsonArray.getJSONObject(i);
+//                        aktifitas.add(jsonObject1.getString("pek"));
+//                        point.add(jsonObject1.getString("nilai"));
+//                    }
+//
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//                Log.d("TAG", "onErrorResponse: " + error);
+//            }
+//        });
+//        RequestQueue requestQueue = Volley.newRequestQueue(this);
+//        requestQueue.add(ambilData);
+//    }
 
     public void reqReg(final String email, final String user, final String pass, final String nama, final String jk, final String umur, final String tinggi, final String berat, final String aktif){
         StringRequest register = new StringRequest(Request.Method.POST, api + "/" + getString(R.string.registerUser), new Response.Listener<String>() {
@@ -179,6 +181,7 @@ public class RegisterUser extends AppCompatActivity {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     if (jsonObject.getString("error").equals("true")) {
+                        Toast.makeText(getApplicationContext(), "Register Berhasil", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(RegisterUser.this, Login.class));
                         finish();
                     } else {

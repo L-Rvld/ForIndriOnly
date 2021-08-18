@@ -33,14 +33,14 @@ public class DetailActivity extends AppCompatActivity {
         progressDialog = new ProgressDialog(this);
         progressDialog.show();
         webApiService = new WebApiService();
-        api = webApiService.getApi_url();
-        nama = findViewById(R.id.txtNamaM);
-        jenis = findViewById(R.id.txtJenisM);
-        energi = findViewById(R.id.txtenergiM);
-        protein= findViewById(R.id.txtproteinM);
-        lemak = findViewById(R.id.txtlemakM);
-        karbo = findViewById(R.id.txtkarboM);
-        bdd = findViewById(R.id.txtbddM);
+        api     = webApiService.getApi_url();
+        nama    = findViewById(R.id.txtNamaM);
+        jenis   = findViewById(R.id.txtJenisM);
+        energi  = findViewById(R.id.txtenergiM);
+        protein = findViewById(R.id.txtproteinM);
+        lemak   = findViewById(R.id.txtlemakM);
+        karbo   = findViewById(R.id.txtkarboM);
+        bdd     = findViewById(R.id.txtbddM);
 
         id = getIntent().getExtras().getString("id");
 
@@ -85,13 +85,14 @@ public class DetailActivity extends AppCompatActivity {
                     }
                 }
         );
+
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
 
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setTitle("Tentang");
+        getSupportActionBar().setTitle("Detail");
 
     }
 

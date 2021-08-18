@@ -133,8 +133,11 @@ public class SqliteHelpers extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
         String sql = "DROP TABLE IF EXISTS " + TABLE_NAME;
         String sql2 = "DROP TABLE IF EXISTS data_rekom";
+        String sql3 = "DROP TABLE IF EXISTS data_gula";
+
         db.execSQL(sql);
         db.execSQL(sql2);
+        db.execSQL(sql3);
         onCreate(db);
     }
 

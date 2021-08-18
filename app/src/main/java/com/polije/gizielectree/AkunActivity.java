@@ -65,6 +65,7 @@ public class AkunActivity extends AppCompatActivity {
         jk = findViewById(R.id.profiljk);
 
         n.setText(sharedprefs.getuser());
+
         if (sharedprefs.getJK().equals("25")){
             jk.setText("Perempuan");
         }else {
@@ -74,7 +75,6 @@ public class AkunActivity extends AppCompatActivity {
         closemode();
         e.requestFocus();
         e.setText(sharedprefs.getEmail());
-
         aleBuilder = new AlertDialog.Builder(this, R.style.AlertDialog);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
